@@ -1,3 +1,40 @@
+# Pax6 Mouse Cornea and Trigeminal RNA-seq
+
+Analysis pipeline and code for bulk RNA-seq studies of Pax6 mutant and control mouse cornea and trigeminal ganglion tissues.
+
+## Overview
+
+This repository contains scripts and workflows used for:
+
+- RNA-seq quality control
+- Read alignment
+- Count matrix generation
+- Differential expression analysis (DESeq2)
+- PCA and visualization
+- Cornea and trigeminal ganglion comparative analyses
+
+## Repository Structure
+
+metadata/
+scripts/
+config/
+results/
+figures/
+docs/
+
+## Contact
+
+James D. Lauderdale
+Department of Cellular Biology
+University of Georgia
+
+## Citation
+
+If you use this repository, please cite the associated manuscript and Zenodo DOI.
+
+
+
+
 # Nerve remodeling in a Pax6 model of keratopathy — analysis pipeline
 
 R code for the curated-panel RNA-seq analysis reported in:
