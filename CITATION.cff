@@ -1,29 +1,29 @@
 cff-version: 1.2.0
 title: >-
-  Analysis pipeline for "Nerve remodeling in a Pax6 model of
-  keratopathy"
+  Analysis pipeline for "Nerve and vascular abnormalities precede
+  loss of corneal transparency in Pax6-haploinsufficient mice"
 message: >-
   If you use this software, please cite both the software and
   the associated manuscript.
 type: software
 authors:
-  - given-names: Sneha
-    name-particle: K.
+  - given-names: Sneha K.
     family-names: Mohan
     affiliation: >-
       Department of Cellular Biology, University of Georgia,
       Athens, GA 30602, USA
-  - given-names: James
-    name-particle: D.
+  - given-names: James D.
     family-names: Lauderdale
     affiliation: >-
       Department of Cellular Biology, University of Georgia,
       Athens, GA 30602, USA
+    email: jdlauder@uga.edu
     orcid: 'https://orcid.org/0000-0001-7503-0528'
-repository-code: '<REPO_URL>'
+repository-code: 'https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets'
 abstract: >-
   R pipeline for the curated-panel RNA-seq analysis reported in
-  "Nerve remodeling in a Pax6 model of keratopathy". Assigns each
+  "Nerve and vascular abnormalities precede loss of corneal
+  transparency in Pax6-haploinsufficient mice". Assigns each
   gene in three curated panels (axon guidance, myelination,
   vascular/lymphatic) one of three expression states in every
   group, tests only those genes the data can support a
@@ -37,21 +37,21 @@ keywords:
   - axon guidance
   - differential expression
   - equivalence testing
+  - corneal vascularization
+  - corneal transparency
 license: MIT
 version: 1.0.0
-date-released: '2026-08-09'
+date-released: '2026-09-24'
 
 # Uncomment and complete once the manuscript is published, so that
 # "Cite this repository" offers the paper as the preferred citation.
 # preferred-citation:
 #   type: article
-#   title: Nerve remodeling in a Pax6 model of keratopathy
+#   title: Nerve and vascular abnormalities precede loss of corneal transparency in Pax6-haploinsufficient mice
 #   authors:
-#     - given-names: Sneha
-#       name-particle: K.
+#     - given-names: Sneha K.
 #       family-names: Mohan
-#     - given-names: James
-#       name-particle: D.
+#     - given-names: James D.
 #       family-names: Lauderdale
 #       orcid: 'https://orcid.org/0000-0001-7503-0528'
 #   journal: <JOURNAL>

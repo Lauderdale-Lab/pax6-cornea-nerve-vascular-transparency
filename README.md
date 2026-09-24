@@ -1,49 +1,12 @@
-# Pax6 Mouse Cornea and Trigeminal RNA-seq
-
-Analysis pipeline and code for bulk RNA-seq studies of Pax6 mutant and control mouse cornea and trigeminal ganglion tissues.
-
-## Overview
-
-This repository contains scripts and workflows used for:
-
-- RNA-seq quality control
-- Read alignment
-- Count matrix generation
-- Differential expression analysis (DESeq2)
-- PCA and visualization
-- Cornea and trigeminal ganglion comparative analyses
-
-## Repository Structure
-
-metadata/
-scripts/
-config/
-results/
-figures/
-docs/
-
-## Contact
-
-James D. Lauderdale
-Department of Cellular Biology
-University of Georgia
-
-## Citation
-
-If you use this repository, please cite the associated manuscript and Zenodo DOI.
-
-
-
-
-# Nerve remodeling in a Pax6 model of keratopathy — analysis pipeline
+# Nerve and vascular abnormalities precede loss of corneal transparency in *Pax6*-haploinsufficient mice — analysis pipeline
 
 R code for the curated-panel RNA-seq analysis reported in:
 
-> **Nerve remodeling in a Pax6 model of keratopathy**
+> **Nerve and vascular abnormalities precede loss of corneal transparency in *Pax6*-haploinsufficient mice**
 > Sneha K. Mohan, James D. Lauderdale
 > Department of Cellular Biology, University of Georgia, Athens, GA 30602, USA
 
-Repository: `<REPO_URL>` · Archived release: `<ZENODO_DOI>` · Contact: `<CONTACT_EMAIL>`
+Repository: <https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets> · Archived release: `<ZENODO_DOI>` · Contact: James D. Lauderdale, <jdlauder@uga.edu>
 
 Licensed under the MIT License — see [`LICENSE`](LICENSE).
 
@@ -77,17 +40,33 @@ panel gene without the expression-status gate, and a call the replicate-aware
 model does not confirm is drawn as an **open symbol** in Figures 7 and 8B
 rather than removed. See *Concordance* below.
 
+Every library is also screened for tissue other than central cornea carried
+at dissection (adherent iris, angle, lens, retina) and for its share of stroma
+and epithelium (`01c`, Supplementary Table 6). The screen excludes nothing; it
+is reported, and `07` lists any status call whose reads come mostly from a
+flagged library.
+
 ## Running it
 
 ```r
 setwd("<project root>")
+## Optional: the cross-dataset check (09) runs only when both are set.
+## Sys.setenv does not survive an R restart.
+Sys.setenv(PAX6_DUNCAN_COUNTS = "<path to GSE183742 count matrix>",
+           PAX6_DUNCAN_META   = "<path to GSE183742 sample metadata CSV>")
 source("run_all.R")
 ```
 
+The runner looks for the scripts in the working directory; if they are kept
+elsewhere (for example in `scripts/`), set `PAX6_SCRIPT_DIR` to that folder.
+Set `PAX6_PROJECT_ROOT` to the folder holding the data if it is not one of the
+defaults listed in `00_config.R`.
+
 Scripts are numbered in execution order and share one R session by design:
 `05` needs transcriptome-wide expression status, `06` needs the shared-gene
-assignment, and `07` needs the fitted models from `04` and `06`, none of which
-is written to disk. The runner stops at the first failure, reports any other
+assignment, `07` needs the fitted models from `04` and `06`, and `09` uses the
+marker identifiers and the per-library rule defined in `01c`, none of which is
+written to disk. The runner stops at the first failure, reports any other
 numbered script present but not run, records a step whose external inputs are
 not set as skipped rather than failed, and writes `RunProvenance.txt` recording
 the input files, every resolved parameter, the step timings and the full
@@ -99,18 +78,25 @@ the input files, every resolved parameter, the step timings and the full
 | `00b_panel_universes.R` | builds the three curated panels |
 | `01_load.R` | metadata, counts, pool sex composition, panels |
 | `01b_qc_library_depth.R` | library complexity at matched sequencing depth |
-| `02_shared_gene_assignment.R` | primary panel for genes on more than one panel |
+| `01c_contamination_indices.R` | off-target tissue and stromal/epithelial share per library (Supplementary Table 6); defines the rule `09` applies to GSE183742 |
+| `02_shared_gene_assignment.R` | primary panel for genes on more than one panel; writes `PanelPrimaryAssignment.R` |
 | `03_expression_status.R` | expression status and assessability |
 | `04_differential.R` | differential expression, equivalence, omnibus, interactions |
 | `05_program_level.R` | abundance-matched program-level permutation tests |
 | `06_developmental.R` | developmental trajectories within genotype |
-| `07_concordance.R` | status calls against a replicate-aware analysis of the same data; threshold sweep; QC figures |
+| `07_concordance.R` | status calls against a replicate-aware analysis of the same data; calls led by a flagged library; threshold sweep; QC figures including the sample PCA |
 | `08_figures.R` | the manuscript's four RNA-seq figures (optional; needs `patchwork`) |
 | `09_cross_dataset_replication.R` | the calls against GSE183742 (optional; runs only when `PAX6_DUNCAN_COUNTS` and `PAX6_DUNCAN_META` are set) |
 | `run_all.R` | driver and provenance |
 
 `07` precedes the figures because they read its verdicts. `09` is a check that
 nothing consumes.
+
+`PanelPrimaryAssignment.R` is generated by `02` and sourced by `00_config.R`; it
+is committed so that every shared-gene assignment can be read without running
+anything. Do not edit it by hand: change `PANEL_PRECEDENCE` or
+`PANEL_PRIMARY_OVERRIDE` in `00_config.R` and re-run. A copy is also written
+with each set of outputs.
 
 Every parameter can be overridden by an environment variable of the same name
 prefixed `PAX6_`, which is how sensitivity analyses are run without editing
@@ -139,6 +125,11 @@ Written to `Paper_Exports/ThreeState_Release/`:
 
 | File | Contents |
 |---|---|
+| `PanelUniverses_BuildReport.txt` | how each curated panel was built, and any difference from the saved master list |
+| `QC_LibraryDepth_*.csv` / `.png` | detection at matched depth, depth series, and each library's share of its pooled group |
+| `Contamination_Indices.csv` | off-target tissue indices, composition and flags, every library |
+| `SuppTable6_Contamination.csv` | the published subset of the above |
+| `SharedGeneAssignment.csv`, `PanelPrimaryAssignment.R` | the primary panel of each shared gene, and why |
 | `ExpressionCalls.csv` | status, pooled counts and Poisson limits per group |
 | `Assessability.csv` | what statement each gene supports, per comparison |
 | `CategoricalGenes.csv` | genes on in one group and off in the other |
@@ -148,6 +139,7 @@ Written to `Paper_Exports/ThreeState_Release/`:
 | `ProgramLevel.csv` | panel-level, abundance-matched |
 | `Developmental_*.csv` | trajectories and status crossings |
 | `Concordance/` | the concordance check, see below |
+| `CrossDataset/` | the calls against GSE183742, the dissection-margin check, and GSE183742's libraries judged by the Supplementary Table 6 rule (only when `09` runs) |
 | `RunProvenance.txt` | inputs, parameters, timings, session info |
 
 Figures, from `08_figures.R`:
@@ -172,7 +164,12 @@ significant in the same direction. Where edgeR is installed, the genotype
 contrasts are refitted with its quasi-likelihood pipeline on the identical
 design as a second engine. It also re-derives the crossings over a grid of
 expression thresholds and minimum folds, reports how much of each pooled count
-its single largest library supplied, and writes two routine diagnostics.
+its single largest library supplied, lists every status call whose higher
+side comes more than half from one library flagged in `01c`, and writes three
+routine diagnostics. One of these is a genome-wide sample PCA, drawn as
+measured and with the batch effect removed for display. It is descriptive
+quality control only: no principal component is interpreted, selected or
+tested, and no result depends on it.
 
 It changes no call and no number upstream, but `08_figures.R` reads its
 verdicts: an unconfirmed call is drawn as an open symbol, and the caption file
@@ -186,10 +183,12 @@ names those genes.
 | `Concordance_GenotypeAxis_Summary.csv` | counts by comparison, route and verdict |
 | `Concordance_GenotypeAxis_FamilyMoves.csv` | quantitatively tested genes whose `changed` call moves with the correction family |
 | `Concordance_edgeR.csv` | the second engine's results (if edgeR is installed) |
+| `Concordance_FlaggedLibraryCalls.csv` | status calls whose largest contributor on the higher side is a library flagged in `01c`, with its share |
 | `Concordance_ThresholdStability.csv` | crossings and Figure 7 row bands over the threshold grid |
 | `Concordance_AgeAxis.png`, `Concordance_GenotypeAxis.png` | bounded fold against ungated log2 fold change, discordant genes labelled |
-| `FigureS4a_DevelopmentalDE_Nerve.*`, `FigureS4b_DevelopmentalDE_Vascular.*` | the ungated within-genotype age contrasts as conventional heatmaps, one colour scale, Figure 7 crossings marked |
+| `Figure7_DevelopmentalDE_Nerve.*`, `Figure7_DevelopmentalDE_Vascular.*` | supplementary to Figure 7: the ungated within-genotype age contrasts as conventional heatmaps, one colour scale, Figure 7 crossings marked. Named after the figure they support (`PAX6_FIG_DEVELOPMENT`, default `Figure7`); the supplementary number is assigned at assembly |
 | `QC_PValueHistograms.png`, `QC_SampleCorrelation.png` | P-value histograms for every fitted contrast; sample–sample Spearman correlation on the panel genes |
+| `QC_SamplePCA.png` / `.pdf`, `_SourceData.csv`, `_VarianceExplained.csv` | sample PCA of the corneal libraries (top 500 variable genes, variance-stabilised), as measured and batch-removed; R² of each of PCs 1–5 with age, group, batch and pool sex composition |
 | `Concordance_Summary.txt` | every number printed by the script, ending with the sentences for Methods |
 
 ### The supplementary combined comparison
@@ -204,11 +203,15 @@ source("08_figures.R")
 Sys.unsetenv("PAX6_FIG7_CONFOUNDED")
 ```
 
-That run writes `FigureS3_Confounded.pdf` / `.png`, its source data and its own
-caption numbers, and touches none of the main figures. It draws the
-program-level figure only: adding the combined comparison changes the heatmap
-colour limits, so heatmaps from that run would not be comparable with Figures 9
-and 10.
+That run writes `Figure8_Confounded.pdf` / `.png`, its source data and its own
+caption numbers, and touches none of the main figures. The name is derived
+from the main figure it is a variant of (`PAX6_FIG_PROGRAM_MAIN`, default
+`Figure8`), so renumbering the main figure renames the supplement with it; its
+final supplementary number is assigned when the figures are assembled. It draws
+the program-level figure only: adding the combined comparison changes the
+heatmap colour limits, so heatmaps from that run would not be comparable with
+Figures 9 and 10. (The switch is still named `PAX6_FIG7_CONFOUNDED` for
+compatibility with earlier runs.)
 
 ### Counting conventions in the outputs
 
@@ -222,6 +225,31 @@ same for status crossings and trajectories. `primary_panel` is carried in the
 developmental outputs so the de-duplication can be reproduced downstream.
 
 ## Change log
+
+**Version 1.0.0 (2026-09-24) is the first public release.** The entries below
+record changes made during development, before release, so that any output
+produced earlier can be matched to the code that produced it.
+
+**2026-09-24 — Off-target tissue screen added to the pipeline; sample PCA.**
+`01c_contamination_indices.R` is new and required. It reproduces
+Supplementary Table 6 inside the pipeline: per-library indices for pigmented
+tissue, retina, lens, angle and conjunctiva, and stromal and epithelial share,
+each judged against the same-age corneal libraries excluding opaque mutants and
+the library itself. Stroma-poor is now defined as both stromal controls (Kera,
+Angptl7) more than 4-fold below that reference, replacing an absolute rule
+(Kera below 100 CPM); on the current data both rules flag the same three
+libraries. The marker list and every threshold moved to `00_config.R` and are
+shared with the dissection-margin check in `09`, whose own list had drifted: it
+no longer counts *Pmel* (expressed in every cornea) or *Chi3l1* (induced with
+inflammation in opaque cornea), and its lens and retina sets are now `01c`'s.
+`09` also judges each GSE183742 library by the Supplementary Table 6 rule.
+`07` gains a list of status calls whose higher side is more than half one
+flagged library, and a descriptive genome-wide sample PCA. The confounded
+supplement from `08` is now named after its main figure (`Figure8_Confounded`,
+was `FigureS3_Confounded`), and so are the developmental heatmaps from `07`
+(`Figure7_DevelopmentalDE_*`, were `FigureS4a/b_DevelopmentalDE_*`). The study
+title in every file now matches the manuscript. `run_all.R` now reports any stray numbered script,
+not only those beginning with `0`. No analysis number changed.
 
 **2026-09-19 — Concordance step added; figures and cross-dataset check renumbered.**
 `07_concordance.R` is new and required. The figure script is now
@@ -257,11 +285,12 @@ R with `DESeq2`, `SummarizedExperiment`, `AnnotationDbi`, `org.Mm.eg.db`,
 `dplyr`, `tidyr`, `tibble`, `readr`, `purrr`, `stringr`, `janitor`,
 `data.table`, `rlang` and `ggplot2`; `patchwork` for the figures; `edgeR` for
 the second-engine check in `07_concordance.R`, which is skipped with a message
-if it is absent. Exact versions used for the published results are recorded in
+if it is absent; `limma` (installed with `edgeR`) for the batch-removed view of
+the sample PCA, which is likewise skipped without it. Exact versions used for the published results are recorded in
 `RunProvenance.txt`.
 
 Input data are not included in this repository; sequencing data are deposited
-at `<ACCESSION>`.
+at `<ACCESSION>`. The independent dataset used by `09` is GEO GSE183742.
 
 ## Methods references
 
