@@ -1,7 +1,6 @@
 # References
 
-Methods cited in the analysis pipeline for **Nerve remodeling in a Pax6 model of
-keratopathy** (Sneha K. Mohan, James D. Lauderdale; Department of Cellular
+Methods cited in the analysis pipeline for **Nerve and vascular abnormalities precede loss of corneal transparency in *Pax6*-haploinsufficient mice** (Sneha K. Mohan, James D. Lauderdale; Department of Cellular
 Biology, University of Georgia, Athens, GA 30602, USA).
 
 Each script carries a numbered
@@ -144,6 +143,29 @@ Garwood (1936) and Schenker & Gentleman (2001), above, are restated locally in
 `07_concordance.R` for the threshold sweep, with an acceptance test that the
 local rule reproduces `03_expression_status.R` exactly.
 
+## Cross-dataset replication
+
+`09_cross_dataset_replication.R` calls the independent dataset GEO GSE183742 by
+the same rule (Garwood 1936; Ulm 1990; Efron 1979; Schenker & Gentleman 2001,
+above) and compares it against an abundance-matched permutation null (Phipson &
+Smyth 2010, above).
+
+**Cohen J** (1960) A coefficient of agreement for nominal scales. *Educational
+and Psychological Measurement* 20:37–46.
+— Kappa, agreement between the two datasets' calls corrected for the agreement
+expected from their marginal composition. Reported beside the permutation null,
+not in place of it.
+
+**Krishnan A, Faranda AP, Novo SG, Wang Y, Duncan MK** (2024) Bioinformatic
+analysis of aniridia related keratopathy. Gene Expression Omnibus, NCBI,
+accession GSE183742 (BioProject PRJNA761786; SRA SRP336260). Submitted 8 Sep
+2021, public 14 Sep 2024.
+<https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE183742>
+— The independent adult cornea dataset (*Pax6*<sup>tm1Pgr</sup>/+; three wild-type
+and three heterozygous corneas, Illumina NovaSeq 6000), re-quantified here with
+the same pipeline as this study. The GEO record lists no associated
+publication, so the dataset is cited by its accession.
+
 ## Design and quality control
 
 **Nygaard V, Rødland EA, Hovig E** (2016) Methods that remove batch effects while
@@ -161,6 +183,19 @@ data is inadmissible. *PLoS Computational Biology* 10:e1003531.
 — Cited because it argues *against* rarefying for differential abundance.
 Rarefaction is used here only to compare library complexity at matched depth in
 the quality-control step, never for any differential test.
+
+**Ritchie ME, Phipson B, Wu D, Hu Y, Law CW, Shi W, Smyth GK** (2015) limma
+powers differential expression analyses for RNA-sequencing and microarray
+studies. *Nucleic Acids Research* 43:e47.
+— `removeBatchEffect`, used only to draw the batch-removed view of the sample
+PCA in `07_concordance.R`. Nothing is computed from the adjusted values, which
+is the use Nygaard et al. (2016, above) leave open: display, not inference.
+
+The sample PCA uses DESeq2's variance-stabilising transformation (Anders &
+Huber 2010; Love et al. 2014, above) with `blind = TRUE`, on the 500 most
+variable genes. The off-target tissue screen in `01c_contamination_indices.R`
+is descriptive (medians of marker CPM against same-age reference libraries)
+and needs no methods citation.
 
 ---
 

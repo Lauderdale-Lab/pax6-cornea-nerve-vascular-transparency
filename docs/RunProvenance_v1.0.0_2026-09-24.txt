@@ -1,0 +1,82 @@
+PAX6 cornea RNA-seq -- run provenance
+======================================================================
+
+Run started : 2026-09-24 08:26:19 EDT
+Run finished: 2026-09-24 08:30:46 EDT
+Script dir  : /Users/jdlauder/Library/Mobile Documents/com~apple~CloudDocs/PAX6 Cornea and Trigeminal RNAseq Quant and Proteomics Data/Mouse_PAX6_Cornea_Trigeminal_RNAseq
+Output dir  : /Users/jdlauder/Library/Mobile Documents/com~apple~CloudDocs/PAX6 Cornea and Trigeminal RNAseq Quant and Proteomics Data/Mouse_PAX6_Cornea_Trigeminal_RNAseq/Pax6_dtu_results/Module3_Standalone_Combined_2025_2026/Paper_Exports/ThreeState_Release
+
+INPUT FILES
+  metadata: /Users/jdlauder/Library/Mobile Documents/com~apple~CloudDocs/PAX6 Cornea and Trigeminal RNAseq Quant and Proteomics Data/Mouse_PAX6_Cornea_Trigeminal_RNAseq/Metadata_and_Sample_Guide/Combined_2025_2026/Combined_2025_2026_sample_metadata.csv
+    0.0 MB, modified 2026-07-17 12:17:29
+    md5 2ebcdfc1cd730c87b0319bf17d3ed4ac
+  counts: /Users/jdlauder/Library/Mobile Documents/com~apple~CloudDocs/PAX6 Cornea and Trigeminal RNAseq Quant and Proteomics Data/Mouse_PAX6_Cornea_Trigeminal_RNAseq/RNAseq_Quantification_Matrices/Combined_2025_2026/gene_counts_featureCounts_all48.txt
+    29.2 MB, modified 2026-08-13 16:33:54
+    md5 67735b701252702ff4d1be50366e30e6
+
+SCRIPTS RUN
+  script                           ok      seconds
+  00_config.R                      TRUE        0.0
+  00b_panel_universes.R            TRUE        8.8
+  01_load.R                        TRUE        0.9
+  01b_qc_library_depth.R           TRUE        4.5
+  01c_contamination_indices.R      TRUE        1.6
+  02_shared_gene_assignment.R      TRUE        0.2
+  03_expression_status.R           TRUE       10.3
+  04_differential.R                TRUE       72.8
+  05_program_level.R               TRUE       58.1
+  06_developmental.R               TRUE       31.6
+  07_concordance.R                 TRUE       39.1
+  08_figures.R                     TRUE        7.3
+  09_cross_dataset_replication.R   TRUE       32.0
+
+PARAMETERS
+  detection exclusions : (none)
+  DE exclusions        : (none)
+  expression band      : ON at lower limit >= 1 CPM, OFF at upper limit < 0.2 CPM
+  Poisson alpha        : 0.05
+  stability gate       : TRUE
+  categorical min fold : 2 (conservative bound)
+  FDR                  : 0.05
+  equivalence bound    : +/-0.585 log2
+  sex covariate        : TRUE
+  shared-gene rule     : Axon guidance > Myelination > Vascular/Lymphatic
+  shared-gene overrides: Notch1 -> Vascular/Lymphatic
+  permutations / bins  : 20000 / 20
+  seed                 : 123
+
+SESSION INFO
+----------------------------------------------------------------------
+R version 4.6.1 (2026-06-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Tahoe 26.7
+
+Matrix products: default
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.3.2             DESeq2_1.52.0               SummarizedExperiment_1.42.0 MatrixGenerics_1.24.0       matrixStats_1.5.0          
+ [6] GenomicRanges_1.64.0        Seqinfo_1.2.0               ggplot2_4.0.3               tidyr_1.3.2                 purrr_1.2.2                
+[11] org.Mm.eg.db_3.23.0         AnnotationDbi_1.74.0        IRanges_2.46.0              S4Vectors_0.50.3            Biobase_2.72.0             
+[16] BiocGenerics_0.58.1         generics_0.1.4              rlang_1.3.0                 data.table_1.18.6.1         janitor_2.2.1              
+[21] stringr_1.6.0               tibble_3.3.1                dplyr_1.2.1                 readr_2.2.0                
+
+loaded via a namespace (and not attached):
+ [1] KEGGREST_1.52.2     gtable_0.3.6        lattice_0.22-9      tzdb_0.5.0          vctrs_0.7.3         tools_4.6.1         parallel_4.6.1     
+ [8] RSQLite_3.53.3      blob_1.3.0          pkgconfig_2.0.3     Matrix_1.7-5        RColorBrewer_1.1-3  S7_0.2.2            lifecycle_1.0.5    
+[15] compiler_4.6.1      farver_2.1.2        Biostrings_2.80.2   statmod_1.5.2       codetools_0.2-20    snakecase_0.11.1    pillar_1.11.1      
+[22] crayon_1.5.3        BiocParallel_1.46.0 limma_3.68.5        cachem_1.1.0        DelayedArray_0.38.2 abind_1.4-8         locfit_1.5-9.12    
+[29] tidyselect_1.2.1    stringi_1.8.9       labeling_0.4.3      fastmap_1.2.0       grid_4.6.1          SparseArray_1.12.2  cli_3.6.6          
+[36] magrittr_2.0.5      S4Arrays_1.12.0     edgeR_4.10.5        withr_3.0.3         scales_1.4.0        bit64_4.8.6         lubridate_1.9.5    
+[43] timechange_0.4.0    XVector_0.52.0      httr_1.4.9          bit_4.6.0           otel_0.2.0          png_0.1-9           hms_1.1.4          
+[50] memoise_2.0.1       viridisLite_0.4.3   Rcpp_1.1.2          glue_1.8.1          DBI_1.3.0           vroom_1.7.1         R6_2.6.1           
