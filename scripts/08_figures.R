@@ -2,17 +2,18 @@
 ## 08_figures.R -- the manuscript's RNA-seq figures
 ##
 ## Analysis pipeline for:
-##   Nerve remodeling in a Pax6 model of keratopathy
+##   Nerve and vascular abnormalities precede loss of corneal transparency
+##   in Pax6-haploinsufficient mice
 ##   Sneha K. Mohan, James D. Lauderdale
 ##
 ## James D. Lauderdale, PhD  (ORCID 0000-0001-7503-0528)
 ## Department of Cellular Biology, University of Georgia
 ## Athens, GA 30602, USA
 ##
-## Repository : <REPO_URL>
+## Repository : https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets
 ## Archived   : <ZENODO_DOI>
 ## Licence    : MIT (see LICENSE)
-## Contact    : <CONTACT_EMAIL>
+## Contact    : James D. Lauderdale, jdlauder@uga.edu
 ###############################################################################
 ##
 ## THE FIGURE IS BUILT AROUND ONE CONSTRAINT: wild-type corneas do not become
@@ -73,7 +74,8 @@
 ## versus-wild-type comparison, which differs from wild type in genotype and in
 ## transparency at once. That run is a SEPARATE, SUPPLEMENTARY FIGURE and is
 ## treated as one throughout: it writes only the program-level figure, under
-## FigureS3_Confounded by default, with its own source data and its own caption
+## <program figure>_Confounded by default (Figure8_Confounded), with its own
+## source data and its own caption
 ## numbers, and it touches none of the main figures. It is safe to run in any
 ## order relative to the main pass.
 ##
@@ -116,7 +118,7 @@ library(patchwork)
 ## layout change that leaves every number unchanged is otherwise invisible in
 ## the log, and two copies of this script with different legends have already
 ## been mistaken for one another.
-FIGURES_VERSION <- "2026-09-19c (stacked legends; open symbols; S3 invocation)"
+FIGURES_VERSION <- "2026-09-24 (confounded supplement named after its main figure)"
 message("08_figures.R version ", FIGURES_VERSION)
 
 ## Include the opaque-mutant-versus-wild-type comparison. FALSE for the main
@@ -161,8 +163,14 @@ FIGURE_WIDTH    <- as.numeric(Sys.getenv("PAX6_FIG_WIDTH", "7.2"))
 ## them. In that mode this script writes the program-level figure ONLY, under a
 ## supplementary name, and leaves Figures 7, 9 and 10 untouched on disk.
 FIG_DEVELOPMENT <- Sys.getenv("PAX6_FIG_DEVELOPMENT", "Figure7")
+## The confounded run's name is DERIVED from the main figure it is a variant
+## of, so the pairing is visible in the file name and survives renumbering:
+## renumber the main figure and the supplement follows. Its final supplementary
+## number is assigned when the figures are assembled, not here.
+FIG_PROGRAM_MAIN <- Sys.getenv("PAX6_FIG_PROGRAM_MAIN", "Figure8")
 FIG_PROGRAM  <- Sys.getenv("PAX6_FIG_PROGRAM",
-                           if (INCLUDE_CONFOUNDED) "FigureS3_Confounded" else "Figure8")
+                           if (INCLUDE_CONFOUNDED) paste0(FIG_PROGRAM_MAIN, "_Confounded")
+                           else FIG_PROGRAM_MAIN)
 FIG_NERVE    <- Sys.getenv("PAX6_FIG_NERVE",    "Figure9")
 FIG_VASCULAR <- Sys.getenv("PAX6_FIG_VASCULAR", "Figure10")
 

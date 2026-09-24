@@ -2,17 +2,18 @@
 ## run_all.R -- runs the pipeline end to end and records provenance
 ##
 ## Analysis pipeline for:
-##   Nerve remodeling in a Pax6 model of keratopathy
+##   Nerve and vascular abnormalities precede loss of corneal transparency
+##   in Pax6-haploinsufficient mice
 ##   Sneha K. Mohan, James D. Lauderdale
 ##
 ## James D. Lauderdale, PhD  (ORCID 0000-0001-7503-0528)
 ## Department of Cellular Biology, University of Georgia
 ## Athens, GA 30602, USA
 ##
-## Repository : <REPO_URL>
+## Repository : https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets
 ## Archived   : <ZENODO_DOI>
 ## Licence    : MIT (see LICENSE)
-## Contact    : <CONTACT_EMAIL>
+## Contact    : James D. Lauderdale, jdlauder@uga.edu
 ##
 ## Run the pipeline with run_all.R. Scripts are numbered in execution order and
 ## share one R session by design; see run_all.R for why.
@@ -31,6 +32,9 @@
 ##   00b_panel_universes.R       builds the three curated gene panels
 ##   01_load.R                   metadata, counts, pool sex composition, panels
 ##   01b_qc_library_depth.R      library complexity at matched depth
+##   01c_contamination_indices.R off-target tissue and stromal share per
+##                               library (Supp. Table 6); also defines the
+##                               rule 09 applies to GSE183742
 ##   02_shared_gene_assignment.R primary panel for genes on more than one
 ##   03_expression_status.R      expressed / not expressed / indeterminate
 ##   04_differential.R           the two models, plus omnibus and interactions
@@ -88,20 +92,23 @@ SCRIPT_DIR <- if (nzchar(Sys.getenv("PAX6_SCRIPT_DIR"))) {
 ## external-data check uses it.
 STEPS <- data.frame(
   file = c("00_config.R", "00b_panel_universes.R", "01_load.R",
-           "01b_qc_library_depth.R", "02_shared_gene_assignment.R",
+           "01b_qc_library_depth.R", "01c_contamination_indices.R",
+           "02_shared_gene_assignment.R",
            "03_expression_status.R", "04_differential.R",
            "05_program_level.R", "06_developmental.R", "07_concordance.R",
            "08_figures.R", "09_cross_dataset_replication.R"),
   label = c("configuration", "panel universes", "load inputs",
-            "library depth QC", "shared-gene assignment",
+            "library depth QC", "off-target tissue indices",
+            "shared-gene assignment",
             "expression status", "differential expression",
             "program level", "developmental trajectories",
             "concordance with a replicate-aware analysis", "figures",
             "cross-dataset replication"),
-  ## 07 is required: the figures read its verdicts.
-  required = c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
+  ## 07 is required: the figures read its verdicts. 01c is required: it writes
+  ## Supp. Table 6 and defines the rule 09 uses.
+  required = c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
                FALSE, FALSE),
-  needs_env = c("", "", "", "", "", "", "", "", "", "", "",
+  needs_env = c("", "", "", "", "", "", "", "", "", "", "", "",
                 "PAX6_DUNCAN_COUNTS,PAX6_DUNCAN_META"),
   stringsAsFactors = FALSE)
 
@@ -123,7 +130,9 @@ if (length(missing)) {
 ## Any other numbered script in the directory is a version this run is not
 ## using. A stale copy left beside the current one is how a pipeline quietly
 ## runs the wrong code.
-present <- sort(basename(Sys.glob(file.path(SCRIPT_DIR, "0*.R"))))
+## Matched on any leading digit, not just 0: a stray 10_*.R sat beside the
+## pipeline unreported because the pattern was "0*.R".
+present <- sort(basename(Sys.glob(file.path(SCRIPT_DIR, "[0-9]*.R"))))
 stale <- setdiff(present, STEPS$file)
 if (length(stale)) {
   message("PRESENT BUT NOT RUN: ", paste(stale, collapse = ", "))
@@ -263,6 +272,7 @@ if (all(status$ok[!is.na(status$ok)])) {
   if (exists("OUT_ROOT")) {
     message("\nOutputs and RunProvenance.txt in:\n  ", OUT_ROOT)
     message("\nManuscript numbers come from:")
+    message("  Contamination_Indices.csv    off-target tissue per library (Supp. Table 6)")
     message("  ExpressionCalls.csv          status, pooled counts, Poisson limits")
     message("  Assessability.csv            what statement each gene supports")
     message("  CategoricalGenes.csv         on in one group, off in the other")

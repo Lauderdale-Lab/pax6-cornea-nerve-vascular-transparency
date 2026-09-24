@@ -2,17 +2,18 @@
 ## 07_concordance.R -- does a standard analysis agree with the three-state calls?
 ##
 ## Analysis pipeline for:
-##   Nerve remodeling in a Pax6 model of keratopathy
+##   Nerve and vascular abnormalities precede loss of corneal transparency
+##   in Pax6-haploinsufficient mice
 ##   Sneha K. Mohan, James D. Lauderdale
 ##
 ## James D. Lauderdale, PhD  (ORCID 0000-0001-7503-0528)
 ## Department of Cellular Biology, University of Georgia
 ## Athens, GA 30602, USA
 ##
-## Repository : <REPO_URL>
+## Repository : https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets
 ## Archived   : <ZENODO_DOI>
 ## Licence    : MIT (see LICENSE)
-## Contact    : <CONTACT_EMAIL>
+## Contact    : James D. Lauderdale, jdlauder@uga.edu
 ##
 ## Run the pipeline with run_all.R. Scripts are numbered in execution order and
 ## share one R session by design; see run_all.R for why.
@@ -55,10 +56,11 @@
 ##      of the rule must first reproduce 03_expression_status.R exactly, or the
 ##      script stops -- the same acceptance test 08 uses.
 ##
-## TWO ROUTINE DIAGNOSTICS a reviewer expects and the pipeline did not yet
-## write: P-value histograms for every fitted contrast (all genes in the model,
-## not just the panels), and a sample-sample correlation heatmap over the
-## panel genes.
+## THREE ROUTINE DIAGNOSTICS a reviewer expects: P-value histograms for every
+## fitted contrast (all genes in the model, not just the panels), a sample-
+## sample correlation heatmap over the panel genes, and a genome-wide sample
+## PCA with and without the batch effect. The PCA is descriptive QC only; no
+## PC is interpreted, selected or tested, and no result depends on it.
 ##
 ## ONE SUPPLEMENTARY FIGURE: the ungated within-genotype age contrasts as a
 ## conventional log2-fold-change heatmap of every panel gene the standard
@@ -93,12 +95,16 @@
 ## Inputs : session objects from 01_load.R, 03_expression_status.R,
 ##          04_differential.R and 06_developmental.R, run in that order in one
 ##          session; and from OUT_ROOT: Developmental_StatusCrossings.csv,
-##          Developmental_Steps.csv, Assessability.csv, DE_Results.csv
+##          Developmental_Steps.csv, Assessability.csv, DE_Results.csv,
+##          and the off-target flags from 01c (ot_table in the session, or
+##          Contamination_Indices.csv)
 ## Outputs: Concordance/Concordance_AgeAxis.csv
 ##          Concordance/Concordance_AgeAxis_StandardSignificant.csv
 ##          Concordance/Concordance_GenotypeAxis.csv
 ##          Concordance/Concordance_GenotypeAxis_Summary.csv
 ##          Concordance/Concordance_edgeR.csv               (if edgeR present)
+##          Concordance/Concordance_FlaggedLibraryCalls.csv  (calls led by a
+##                                                   library 01c flagged)
 ##          Concordance/Concordance_ThresholdStability.csv
 ##          Concordance/Concordance_AgeAxis.png
 ##          Concordance/Concordance_GenotypeAxis.png
@@ -106,6 +112,8 @@
 ##          Concordance/<FIG_DEV_VASCULAR>.pdf/.png/_SourceData.csv
 ##          Concordance/QC_PValueHistograms.png
 ##          Concordance/QC_SampleCorrelation.png
+##          Concordance/QC_SamplePCA.png/.pdf, _SourceData.csv,
+##          _VarianceExplained.csv   (descriptive; nothing is computed from it)
 ##          Concordance/Concordance_Summary.txt
 ##
 ## Every top-level object here is prefixed c9_ / C9_. The scripts share one
@@ -131,12 +139,19 @@ C9_OUT <- file.path(OUT_ROOT, "Concordance")
 dir.create(C9_OUT, showWarnings = FALSE, recursive = TRUE)
 c9_path <- function(...) file.path(C9_OUT, ...)
 
-## Supplementary figure names. Parameters, as in 08_figures.R, because the
-## supplement is renumbered as often as the main figures. The heatmap is split
-## the way Figures 9 and 10 are: nerve panels in one, vascular in the other,
-## because together they exceed a printed page. Both share one colour scale.
-C9_FIG_DEV_NERVE    <- Sys.getenv("PAX6_FIG_DEV_NERVE",    "FigureS4a_DevelopmentalDE_Nerve")
-C9_FIG_DEV_VASCULAR <- Sys.getenv("PAX6_FIG_DEV_VASCULAR", "FigureS4b_DevelopmentalDE_Vascular")
+## Supplementary figure names. These heatmaps support the developmental
+## figure (Figure 7: they mark its crossings), so their names are DERIVED from
+## that figure's name, as 08 derives <program figure>_Confounded: renumber the
+## main figure and the supplement follows. PAX6_FIG_DEVELOPMENT is the same
+## variable 08 reads. The final supplementary number is assigned when the
+## figures are assembled. The heatmap is split the way Figures 9 and 10 are:
+## nerve panels in one, vascular in the other, because together they exceed a
+## printed page. Both share one colour scale.
+C9_FIG_DEV_MAIN     <- Sys.getenv("PAX6_FIG_DEVELOPMENT", "Figure7")
+C9_FIG_DEV_NERVE    <- Sys.getenv("PAX6_FIG_DEV_NERVE",
+                                  paste0(C9_FIG_DEV_MAIN, "_DevelopmentalDE_Nerve"))
+C9_FIG_DEV_VASCULAR <- Sys.getenv("PAX6_FIG_DEV_VASCULAR",
+                                  paste0(C9_FIG_DEV_MAIN, "_DevelopmentalDE_Vascular"))
 
 c9_read <- function(f) {
   p <- file.path(OUT_ROOT, f)
@@ -531,6 +546,88 @@ if (requireNamespace("edgeR", quietly = TRUE)) {
 }
 
 ## ---------------------------------------------------------------------------
+## 2e. Do any status calls rest on a library carrying an off-target flag?
+## ---------------------------------------------------------------------------
+
+## 01c flags libraries that carry adjacent tissue (iris, angle, lens, retina)
+## or a different share of stroma or epithelium. Status is called on POOLED
+## counts, so one library can supply most of a group's reads for a gene. This
+## asks, for every Figure 7 crossing and every Figure 8B categorical call,
+## which library supplies the most reads on the HIGHER side -- the side a
+## contaminant could have manufactured -- and whether that library is flagged.
+##
+## What this adds to the leave-one-out gate: the gate already guarantees that
+## no call changes STATUS when any single library is dropped. It does not say
+## whose reads carry the call's magnitude. A call whose higher side is mostly
+## one flagged library is listed here, with the flag, so the gene can be read
+## against it. Only the higher side is examined: extra tissue on the lower side
+## can hide a difference but cannot create one.
+
+c9_say("")
+c9_say("=== 2e. Status calls whose higher side is led by a library 01c flagged ===")
+
+c9_ot <- if (exists("ot_table")) ot_table else c9_read("Contamination_Indices.csv")
+## Non-trace flags only: an added-tissue family flag or a composition flag.
+c9_flagged_libs <- c9_ot %>%
+  dplyr::filter(evaluated %in% TRUE,
+                grepl("[0-9]x \\(|-poor", contamination_flags)) %>%
+  dplyr::select(library_id, library_flags = contamination_flags)
+c9_say(sprintf("  %d corneal librar(ies) carry a non-trace flag: %s",
+               nrow(c9_flagged_libs), paste(c9_flagged_libs$library_id, collapse = ", ")))
+
+c9_top_lib <- function(gene_id, cell) {
+  k <- count_mat[gene_id, c9_ids_all[[cell]]]
+  ## A tie for largest means no single library leads; which.max would name
+  ## the first and credit it with a call it does not carry.
+  if (sum(k) == 0 || sum(k == max(k)) > 1) return(NA_character_)
+  names(k)[which.max(k)]
+}
+
+c9_calls_high <- dplyr::bind_rows(
+  c9_age %>% dplyr::transmute(
+    figure = "Figure 7 crossing", comparison = paste(genotype, step),
+    primary_panel, symbol, gene_id, verdict, bounded_fold,
+    cell_high = unname(mapply(function(g, s, d) {
+      i <- match(s, DEV_INTERVALS$step)
+      SERIES[[g]][[if (d == "on with age") DEV_INTERVALS$later[i] else DEV_INTERVALS$earlier[i]]]
+    }, genotype, step, direction))),
+  c9_cat %>% dplyr::transmute(
+    figure = "Figure 8B categorical", comparison = contrast,
+    primary_panel, symbol, gene_id, verdict, bounded_fold,
+    cell_high = higher_in)) %>%
+  dplyr::filter(!is.na(cell_high)) %>%
+  dplyr::mutate(
+    top_library = unname(mapply(c9_top_lib, gene_id, cell_high)),
+    top_share   = c9_top_share_vec(gene_id, cell_high))
+
+c9_on_flagged <- c9_calls_high %>%
+  dplyr::inner_join(c9_flagged_libs, by = c(top_library = "library_id")) %>%
+  dplyr::mutate(dominated = !is.na(top_share) & top_share > 0.5) %>%
+  dplyr::arrange(dplyr::desc(dominated), dplyr::desc(top_share))
+readr::write_csv(c9_on_flagged, c9_path("Concordance_FlaggedLibraryCalls.csv"))
+
+c9_say(sprintf("  Of %d calls, %d have a flagged library as the largest contributor on the higher side; in %d it supplies more than half the pooled count.",
+               nrow(c9_calls_high), nrow(c9_on_flagged), sum(c9_on_flagged$dominated)))
+if (nrow(c9_on_flagged)) {
+  c9_show(c9_on_flagged %>% dplyr::count(top_library, figure) %>%
+            tidyr::pivot_wider(names_from = figure, values_from = n, values_fill = 0))
+  c9_dom <- c9_on_flagged %>% dplyr::filter(dominated)
+  if (nrow(c9_dom)) {
+    c9_say("  Calls whose higher side is MORE THAN HALF one flagged library:")
+    c9_show(c9_dom %>% dplyr::transmute(
+      figure, comparison, symbol, cell_high, top_library, top_share,
+      bounded_fold, verdict, library_flags = substr(library_flags, 1, 60)))
+    c9_say("  Read each against its library's flag. A gene expressed in the flagged")
+    c9_say("  tissue (a lens or retinal gene under a lens or retina flag, a stromal")
+    c9_say("  gene under stroma-poor) is a candidate artefact; an unrelated gene is")
+    c9_say("  not implicated by the flag alone.")
+  } else {
+    c9_say("  None is dominated: where a flagged library leads, the other libraries")
+    c9_say("  of the group supply at least half the reads.")
+  }
+}
+
+## ---------------------------------------------------------------------------
 ## 3. Threshold sweep for the crossings
 ## ---------------------------------------------------------------------------
 
@@ -739,7 +836,7 @@ c9_heat <- c9_heat_all %>%
     genotype = factor(C9_GENOTYPE_LABEL[genotype], levels = unname(C9_GENOTYPE_LABEL)),
     primary_panel = factor(primary_panel, levels = names(C9_PANEL_COLOUR)))
 ## ONE colour limit for both halves, taken over every gene drawn in either, so
-## that a tile of a given colour means the same fold change in S4a and S4b.
+## that a tile of a given colour means the same fold change in the nerve and vascular halves.
 c9_lim <- max(abs(c9_heat$shown), na.rm = TRUE)
 
 c9_dev_heat <- function(keep, name, title) {
@@ -864,6 +961,107 @@ c9_p_cor <- ggplot2::ggplot(c9_cor_long, ggplot2::aes(a, b, fill = rho)) +
                  legend.position = "right")
 c9_save(c9_p_cor, "QC_SampleCorrelation", 7.5, 7)
 
+## 4f. Sample PCA, genome-wide -- descriptive QC, no inference
+##
+## The figure reviewers routinely ask for: where each corneal library sits on
+## the main axes of whole-transcriptome variation, and whether any sits apart
+## from its group. It is drawn twice. The left panel is the data as they are,
+## coloured by group and shaped by sequencing batch, and shows why every model
+## in this analysis carries a batch term. The right panel removes the batch
+## effect (limma::removeBatchEffect, protecting the group means) so the
+## biological structure can be seen; that adjustment is for display ONLY and
+## no statistic anywhere in the pipeline is computed from it.
+##
+## NO PC IS INTERPRETED, SELECTED OR TESTED. The table of variance explained
+## by age, genotype/opacity group, batch and pool sex composition is an R^2
+## per PC, a description of what the axes line up with. The paper's claims
+## rest on the per-gene models, not on this figure.
+##
+## Libraries flagged in 01c are labelled, so an outlier can be read against
+## its off-target flag.
+c9_pca_ids <- c9_samples$sample_id
+c9_pca_cm  <- count_mat[, c9_pca_ids, drop = FALSE]
+c9_pca_cm  <- c9_pca_cm[rowSums(c9_pca_cm >= 10) >= 2, , drop = FALSE]
+c9_vst     <- DESeq2::vst(c9_pca_cm, blind = TRUE)
+
+c9_pca_one <- function(mat, label) {
+  v   <- apply(mat, 1, stats::var)
+  top <- order(v, decreasing = TRUE)[seq_len(min(PCA_NTOP, length(v)))]
+  pc  <- stats::prcomp(t(mat[top, , drop = FALSE]), center = TRUE, scale. = FALSE)
+  pve <- 100 * pc$sdev^2 / sum(pc$sdev^2)
+  list(scores = tibble::tibble(
+         sample_id = rownames(pc$x), view = label,
+         view_label = sprintf("%s\nPC1 %.0f%%, PC2 %.0f%% of variance", label, pve[1], pve[2]),
+         PC1 = pc$x[, 1], PC2 = pc$x[, 2]),
+       x = pc$x, pve = pve, label = label)
+}
+
+c9_pca_views <- list(c9_pca_one(c9_vst, "As measured"))
+if (requireNamespace("limma", quietly = TRUE) &&
+    dplyr::n_distinct(c9_samples$batch) > 1) {
+  c9_vst_adj <- limma::removeBatchEffect(
+    c9_vst, batch = factor(c9_samples$batch),
+    design = stats::model.matrix(~ factor(c9_samples$group)))
+  c9_pca_views[[2]] <- c9_pca_one(c9_vst_adj, "Batch removed (display only)")
+} else {
+  c9_say("  Sample PCA: limma not installed or one batch only; batch-removed view skipped.")
+}
+
+## What each PC lines up with: R^2 of PC scores on each sample variable, one at
+## a time. Descriptive, no P values.
+c9_pc_r2 <- purrr::map_dfr(c9_pca_views, function(v) {
+  sv <- c9_samples[match(rownames(v$x), c9_samples$sample_id), ]
+  vars <- list(age = factor(sv$age_group), group = factor(sv$group),
+               batch = factor(sv$batch), male_frac = sv$male_frac)
+  purrr::map_dfr(seq_len(min(5, ncol(v$x))), function(k) {
+    r2 <- vapply(vars, function(z) {
+      if ((is.factor(z) && nlevels(droplevels(z)) < 2) || all(is.na(z))) return(NA_real_)
+      round(summary(stats::lm(v$x[, k] ~ z))$r.squared, 2)
+    }, numeric(1))
+    tibble::tibble(view = v$label, PC = paste0("PC", k),
+                   pct_variance = round(v$pve[k], 1),
+                   R2_age = r2[["age"]], R2_group = r2[["group"]],
+                   R2_batch = r2[["batch"]], R2_male_frac = r2[["male_frac"]])
+  })
+})
+readr::write_csv(c9_pc_r2, c9_path("QC_SamplePCA_VarianceExplained.csv"))
+c9_say("")
+c9_say(sprintf("  Sample PCA (%d corneal libraries, top %d variable genes, VST): R^2 of each PC with each sample variable",
+               length(c9_pca_ids), PCA_NTOP))
+c9_show(c9_pc_r2)
+c9_say("  Descriptive only. No PC is selected, interpreted or tested.")
+
+c9_pca_df <- dplyr::bind_rows(lapply(c9_pca_views, `[[`, "scores")) %>%
+  dplyr::left_join(dplyr::select(c9_samples, sample_id, group, batch), by = "sample_id") %>%
+  dplyr::left_join(c9_flagged_libs, by = c(sample_id = "library_id")) %>%
+  dplyr::mutate(group = factor(group, levels = C9_GROUP_ORDER),
+                batch = factor(batch),
+                flagged = !is.na(library_flags),
+                view_label = factor(view_label, levels = unique(view_label)))
+readr::write_csv(c9_pca_df %>% dplyr::select(-view_label),
+                 c9_path("QC_SamplePCA_SourceData.csv"))
+
+C9_GROUP_COLOUR <- c(P3_P4_WT = "#9ECAE1", P3_P4_Sey = "#FDAE6B",
+                     P15_WT = "#4292C6", P15_Sey = "#F16913",
+                     Adult_WT = "#08306B", Adult_Sey_T = "#A63603", Adult_Sey_O = "#000000")
+c9_p_pca <- ggplot2::ggplot(c9_pca_df, ggplot2::aes(PC1, PC2, colour = group, shape = batch)) +
+  ggplot2::geom_point(size = 2.2, alpha = 0.9) +
+  ggplot2::geom_text(data = c9_pca_df %>% dplyr::filter(flagged),
+                     ggplot2::aes(label = sample_id), size = 2.1, vjust = -0.9,
+                     colour = "grey20", show.legend = FALSE) +
+  ggplot2::facet_wrap(~ view_label, scales = "free") +
+  ggplot2::scale_colour_manual(values = C9_GROUP_COLOUR, name = NULL, drop = FALSE) +
+  ggplot2::scale_shape_manual(values = c(16, 17, 15, 18)[seq_len(nlevels(c9_pca_df$batch))],
+                              name = "Batch") +
+  ggplot2::labs(title = "Sample PCA, corneal libraries",
+                subtitle = paste0("Top ", PCA_NTOP, " most variable genes, variance-stabilised counts. ",
+                                  "Labelled: libraries with an off-target flag (Supp. Table 6).\n",
+                                  "Right panel: batch removed for display only; no result is computed from it.")) +
+  c9_theme +
+  ggplot2::theme(legend.position = "right")
+c9_save(c9_p_pca, "QC_SamplePCA", 9, 4.6)
+ggplot2::ggsave(c9_path("QC_SamplePCA.pdf"), c9_p_pca, width = 9, height = 4.6, units = "in")
+
 ## ---------------------------------------------------------------------------
 ## 5. Summary
 ## ---------------------------------------------------------------------------
@@ -878,6 +1076,21 @@ c9_say("  panel gene without the expression-status gate.")
 c9_say(sprintf("  Of %d categorical genotype calls, %d (%.0f%%) were significant in the same",
                nrow(c9_cat), c9_n_cat_ok, 100 * c9_n_cat_ok / nrow(c9_cat)))
 c9_say("  direction under the ungated model.")
+## Only DOMINATED calls are quoted. "Largest contributor" is not a finding
+## where most of a group is flagged -- four of the five opaque libraries are --
+## because one of them then leads almost every call by default.
+c9_dom_all <- c9_on_flagged %>% dplyr::filter(dominated)
+c9_say(sprintf("  In %d of these %d status calls, a single library carrying an off-target",
+               nrow(c9_dom_all), nrow(c9_calls_high)))
+c9_say(sprintf("  flag (Supp. Table 6) supplied more than half the pooled count on the higher%s",
+               if (nrow(c9_dom_all)) " side:" else " side."))
+if (nrow(c9_dom_all)) {
+  for (lib in unique(c9_dom_all$top_library)) {
+    d <- c9_dom_all[c9_dom_all$top_library == lib, ]
+    c9_say(sprintf("    %s (%s): %s", lib, paste(unique(d$cell_high), collapse = ", "),
+                   paste(sort(unique(d$symbol)), collapse = ", ")))
+  }
+}
 c9_say("  State both numbers and name the exceptions; a check that is only quoted")
 c9_say("  when it agrees is not a check.")
 c9_say(strrep("=", 74))

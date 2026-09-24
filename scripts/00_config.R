@@ -2,17 +2,18 @@
 ## 00_config.R -- every analysis parameter, in one place
 ##
 ## Analysis pipeline for:
-##   Nerve remodeling in a Pax6 model of keratopathy
+##   Nerve and vascular abnormalities precede loss of corneal transparency
+##   in Pax6-haploinsufficient mice
 ##   Sneha K. Mohan, James D. Lauderdale
 ##
 ## James D. Lauderdale, PhD  (ORCID 0000-0001-7503-0528)
 ## Department of Cellular Biology, University of Georgia
 ## Athens, GA 30602, USA
 ##
-## Repository : <REPO_URL>
+## Repository : https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets
 ## Archived   : <ZENODO_DOI>
 ## Licence    : MIT (see LICENSE)
-## Contact    : <CONTACT_EMAIL>
+## Contact    : James D. Lauderdale, jdlauder@uga.edu
 ##
 ## Run the pipeline with run_all.R. Scripts are numbered in execution order and
 ## share one R session by design; see run_all.R for why.
@@ -288,6 +289,107 @@ DETECT_MAD_CUTOFF  <- as.numeric(Sys.getenv("PAX6_DETECT_MAD_CUTOFF", "3"))
 DETECT_SOFT_RATIO  <- as.numeric(Sys.getenv("PAX6_DETECT_SOFT_RATIO", "0.90"))
 
 ## --------------------------------------------------------------------------
+## Off-target tissue in a library (01c_contamination_indices.R, and the
+## dissection-margin check in 09_cross_dataset_replication.R)
+## --------------------------------------------------------------------------
+
+## ONE marker table, read by both scripts. They previously kept separate lists,
+## and the lists had drifted: the margin check still counted Pmel as a pigment
+## marker and Chi3l1 as an angle marker after both had been shown to mislead in
+## this tissue. Two scripts must not judge the same tissue with different genes.
+##
+##   family    the per-library index the gene contributes to in 01c. NA means
+##             the gene is shown in the 09 margin table only.
+##   margin    TRUE: listed in 09's dissection-margin table.
+##   excluded  why a gene that looks like a marker is NOT used. Such genes stay
+##             in the table so the exclusion is on the record, not silent.
+##
+## The conjunctival index is computed and reported but never FLAGGED:
+## conjunctivalisation of the Pax6 mutant cornea is a known phenotype of the
+## tissue itself, not a dissection artefact, so a high value is biology.
+OFFTARGET_MARKERS <- data.frame(
+  symbol = c(
+    "Krt12", "Aldh3a1", "Kera", "Angptl7",
+    "Krt15", "Krt19", "Muc4", "Krt13", "Krt4", "Muc5ac",
+    "Myoc", "Mgp", "Chi3l1",
+    "Tyr", "Tyrp1", "Dct", "Mlana", "Pmel",
+    "Vwf", "Cldn5",
+    "Cryaa", "Cryba1", "Crybb2", "Crygd", "Mip", "Bfsp2", "Cryab",
+    "Rho", "Gnat1", "Sag", "Pde6b", "Rcvrn", "Crx", "Nrl", "Rpe65",
+    "Optc"),
+  compartment = c(
+    rep("central cornea (control)", 4),
+    rep("limbal / conjunctival epithelium", 6),
+    rep("trabecular meshwork / angle", 3),
+    rep("pigmented tissue: iris, ciliary body, limbal melanocytes", 5),
+    rep("vascular endothelium: limbal arcade", 2),
+    rep("lens", 7),
+    rep("retina / RPE", 8),
+    "ciliary body / vitreous"),
+  family = c(
+    "epithelial_control", "epithelial_control", "stromal_control", "stromal_control",
+    NA, NA, NA, "conj", "conj", "conj",
+    "angle", NA, NA,
+    "pigment", "pigment", "pigment", "pigment", NA,
+    NA, NA,
+    "lens", "lens", "lens", "lens", "lens", "lens", NA,
+    rep("retina", 8),
+    NA),
+  margin = c(
+    rep(TRUE, 12), FALSE,
+    rep(TRUE, 4), FALSE,
+    TRUE, TRUE,
+    rep(TRUE, 6), FALSE,
+    rep(TRUE, 8),
+    TRUE),
+  excluded = c(
+    rep(NA, 12),
+    "induced with inflammation in opaque Sey cornea; would read opacity as an angle difference",
+    rep(NA, 4),
+    "12-55 CPM in every corneal library; not specific to adherent pigmented tissue",
+    rep(NA, 8),
+    "expressed by the cornea itself",
+    rep(NA, 9)),
+  stringsAsFactors = FALSE)
+
+## Genes also reported individually, one column each, in the per-library table.
+## (Myoc is not repeated here: it is the whole of the angle index.)
+OFFTARGET_SINGLE_GENES <- c("Optc", "Rho", "Cryaa", "Kera", "Krt12")
+
+## The indices that can raise a flag, and the rule. A library is flagged for a
+## family when its summed index exceeds OFFTARGET_FOLD times the median of its
+## reference libraries AND at least two of the family's genes (one, for a
+## one-gene family) each exceed OFFTARGET_GENE_FOLD times their own reference
+## median. The second clause stops a single noisy gene carrying a family.
+## Between OFFTARGET_TRACE_FOLD and OFFTARGET_FOLD it is reported as trace.
+## The floors keep a reference median of zero from making any count a flag.
+##
+## The reference is the other corneal libraries of the same age, same
+## laboratory, EXCLUDING opaque mutants (where adherent iris is expected and
+## would raise the bar) and EXCLUDING the library being judged.
+OFFTARGET_FLAG_FAMILIES <- c("pigment", "retina", "lens", "angle")
+OFFTARGET_FOLD       <- as.numeric(Sys.getenv("PAX6_OFFTARGET_FOLD", "10"))
+OFFTARGET_TRACE_FOLD <- as.numeric(Sys.getenv("PAX6_OFFTARGET_TRACE_FOLD", "5"))
+OFFTARGET_GENE_FOLD  <- as.numeric(Sys.getenv("PAX6_OFFTARGET_GENE_FOLD", "5"))
+OFFTARGET_INDEX_FLOOR <- 0.5   # CPM, floor on a reference index median
+OFFTARGET_GENE_FLOOR  <- 0.2   # CPM, floor on a reference gene median
+
+## Tissue COMPOSITION, as opposed to added tissue. A library whose stromal (or
+## epithelial) control markers ALL sit more than this many fold below its
+## reference took a different share of that layer. This is the ONE criterion for
+## "stroma-poor" in the pipeline: 01c applies it per library against same-age
+## references, and 09 applies it between the two wild types. It replaces an
+## absolute rule (Kera below 100 CPM) that ignored age.
+## PAX6_X_CONTROL_MAX_FOLD is the name 09 used before this was shared.
+OFFTARGET_CONTROL_MAX_FOLD <- as.numeric(Sys.getenv(
+  "PAX6_OFFTARGET_CONTROL_MAX_FOLD",
+  Sys.getenv("PAX6_X_CONTROL_MAX_FOLD", "4")))
+
+## Sample PCA in 07_concordance.R: a descriptive QC figure only. The number of
+## most-variable genes it uses (500 is the DESeq2 plotPCA convention).
+PCA_NTOP <- as.integer(Sys.getenv("PAX6_PCA_NTOP", "500"))
+
+## --------------------------------------------------------------------------
 ## Program-level test
 ## --------------------------------------------------------------------------
 
@@ -362,6 +464,9 @@ config_report <- function() {
   message("  QC matched depth     : ",
           if (is.na(RAREFY_DEPTH)) "smallest library" else format(RAREFY_DEPTH, big.mark = ","),
           "   ", RAREFY_REPS, " replicate(s)")
+  message("  off-target flag      : index > ", OFFTARGET_FOLD, "x same-age reference (trace > ",
+          OFFTARGET_TRACE_FOLD, "x); composition: controls > ",
+          OFFTARGET_CONTROL_MAX_FOLD, "x below reference")
   message("  permutations / bins  : ", N_PERM, " / ", N_BINS, "   seed ", SEED)
   message(strrep("=", 74))
 }

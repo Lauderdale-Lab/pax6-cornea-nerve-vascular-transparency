@@ -3,13 +3,14 @@
 ##
 ## James D. Lauderdale, PhD; Department of Cellular Biology,
 ## University of Georgia, Athens, GA 30602, USA
-## Study: "Nerve remodeling in a Pax6 model of keratopathy"
+## Study: "Nerve and vascular abnormalities precede loss of corneal
+##         transparency in Pax6-haploinsufficient mice"
 ## Study authors: Sneha K. Mohan, James D. Lauderdale
 ##
-## Repository : <REPO_URL>
+## Repository : https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets
 ## Archived   : <ZENODO_DOI>
-## Licence    : <LICENCE>
-## Contact    : <CONTACT_EMAIL>
+## Licence    : MIT (see LICENSE)
+## Contact    : James D. Lauderdale, jdlauder@uga.edu
 ##
 ## PURPOSE
 ##   Ask whether the three-state expression calls of this study reproduce in an
@@ -67,8 +68,9 @@
 ##   Sys.setenv(PAX6_DUNCAN_META   = "<path to Duncan metadata csv>")
 ##   source("09_cross_dataset_replication.R")
 ##
-##   Requires 00_config.R, 01_load.R and a completed ThreeState_Release run
-##   (ExpressionCalls.csv must exist) for the Lauderdale side.
+##   Requires 00_config.R, 01_load.R, 01c_contamination_indices.R and a
+##   completed ThreeState_Release run (ExpressionCalls.csv must exist) for the
+##   Lauderdale side.
 ## ---------------------------------------------------------------------------
 
 suppressPackageStartupMessages({
@@ -79,6 +81,10 @@ suppressPackageStartupMessages({
 
 if (!exists("OUT_ROOT")) stop("Source 00_config.R first.")
 if (!exists("count_mat")) stop("Source 01_load.R first.")
+## The margin check uses the marker identifiers and the per-library rule that
+## 01c defines, so that GSE183742 is judged on exactly the terms of Supp. Table 6.
+if (!exists("ot_marker_ids") || !exists("ot_flag_library"))
+  stop("Source 01c_contamination_indices.R first.")
 
 X_OUT <- file.path(OUT_ROOT, "CrossDataset")
 dir.create(X_OUT, showWarnings = FALSE, recursive = TRUE)
@@ -656,30 +662,24 @@ if (!is.null(x_dir_tab)) {
 ## Angptl7 (CDT6) is a keratocyte gene abundant in corneal stroma; an earlier
 ## version listed it under trabecular meshwork, where it is also expressed,
 ## and it then flagged a stromal difference as an angle difference.
-X_CONTROL_MAX_FOLD <- as.numeric(Sys.getenv("PAX6_X_CONTROL_MAX_FOLD", unset = "4"))
-X_MARGIN_MARKERS <- data.frame(
-  symbol = c("Krt12", "Aldh3a1", "Kera", "Angptl7",
-             "Krt15", "Krt19", "Krt13", "Krt4", "Muc4", "Muc5ac",
-             "Myoc", "Chi3l1", "Mgp",
-             "Tyrp1", "Dct", "Pmel", "Mlana",
-             "Vwf", "Cldn5",
-             "Cryaa", "Crybb1", "Mip",
-             "Rho"),
-  compartment = c(rep("central cornea (control)", 4),
-                  rep("limbal / conjunctival epithelium", 6),
-                  rep("trabecular meshwork / angle", 3),
-                  rep("pigmented tissue: iris, ciliary body, limbal melanocytes", 4),
-                  rep("vascular endothelium: limbal arcade", 2),
-                  rep("lens", 3),
-                  "retina"),
-  stringsAsFactors = FALSE)
+##
+## THE MARKERS AND THE TOLERANCE COME FROM 00_config.R (OFFTARGET_MARKERS,
+## OFFTARGET_CONTROL_MAX_FOLD), shared with 01c_contamination_indices.R, and
+## the identifiers are the ones 01c resolved against the count matrix. This
+## script kept its own list until 2026-09-24, and it had drifted from 01c's:
+## it still counted Pmel as pigment (present at 12-55 CPM in every cornea) and
+## Chi3l1 as angle (induced with inflammation in opaque cornea, so it read
+## opacity as a dissection difference). Both are now excluded, with the reason
+## recorded in the config table, and the lens and retina sets are 01c's.
+X_CONTROL_MAX_FOLD <- OFFTARGET_CONTROL_MAX_FOLD
+X_MARGIN_MARKERS <- OFFTARGET_MARKERS[OFFTARGET_MARKERS$margin &
+                                      is.na(OFFTARGET_MARKERS$excluded),
+                                      c("symbol", "compartment", "family")]
+X_STROMAL_CONTROLS    <- X_MARGIN_MARKERS$symbol[X_MARGIN_MARKERS$family %in% "stromal_control"]
+X_EPITHELIAL_CONTROLS <- X_MARGIN_MARKERS$symbol[X_MARGIN_MARKERS$family %in% "epithelial_control"]
 
-if (requireNamespace("org.Mm.eg.db", quietly = TRUE) &&
-    requireNamespace("AnnotationDbi", quietly = TRUE)) {
-  x_map <- suppressMessages(AnnotationDbi::mapIds(
-    org.Mm.eg.db::org.Mm.eg.db, keys = X_MARGIN_MARKERS$symbol,
-    column = "ENSEMBL", keytype = "SYMBOL", multiVals = "first"))
-  X_MARGIN_MARKERS$gene_id <- unname(x_map[X_MARGIN_MARKERS$symbol])
+if (nrow(X_MARGIN_MARKERS)) {
+  X_MARGIN_MARKERS$gene_id <- unname(ot_marker_ids[X_MARGIN_MARKERS$symbol])
   x_unmapped <- X_MARGIN_MARKERS$symbol[is.na(X_MARGIN_MARKERS$gene_id) |
                                         !X_MARGIN_MARKERS$gene_id %in% x_common]
   if (length(x_unmapped)) {
@@ -759,8 +759,8 @@ if (requireNamespace("org.Mm.eg.db", quietly = TRUE) &&
                      cpm_GSE183742_WT = x_bad$cpm_GSE183742_WT,
                      bounded_fold_WT = x_bad$bounded_fold_WT,
                      higher_in = x_bad$higher_in_WT), row.names = FALSE)
-    x_bad_stromal <- intersect(x_bad$symbol, c("Kera", "Angptl7"))
-    x_bad_epi     <- intersect(x_bad$symbol, c("Krt12", "Aldh3a1"))
+    x_bad_stromal <- intersect(x_bad$symbol, X_STROMAL_CONTROLS)
+    x_bad_epi     <- intersect(x_bad$symbol, X_EPITHELIAL_CONTROLS)
     if (length(x_bad_stromal) && !length(x_bad_epi))
       cat("  Both stromal controls are out of tolerance and both epithelial controls\n",
           "  are within it: the libraries differ in their STROMAL share, not in\n",
@@ -837,9 +837,30 @@ if (requireNamespace("org.Mm.eg.db", quietly = TRUE) &&
   cat("  record, which does not state the cut.\n")
 
   write.csv(x_margin, file.path(X_OUT, "CrossDataset_DissectionMargin.csv"), row.names = FALSE)
+
+  ## PER LIBRARY, ON THE TERMS OF SUPP. TABLE 6. The block above compares
+  ## pooled groups; this one judges each GSE183742 library by the rule 01c
+  ## applies to ours, against the reference 01c uses for an adult cornea (this
+  ## study's adult wild type and transparent mutant). The same flags, the same
+  ## thresholds and the same stroma-poor criterion, so a sentence comparing the
+  ## two datasets' contamination rests on one rule rather than two.
+  x_ot_ref  <- ot_marker_cpm(count_mat, lib_sizes, c(x_laud_wt_ids, x_laud_tr_ids))
+  x_ot_dcpm <- ot_marker_cpm(x_dm, x_dlib, c(x_wt, x_mut))
+  x_ot_duncan <- do.call(rbind, lapply(colnames(x_ot_dcpm), function(s) {
+    cbind(data.frame(library_id = s,
+                     group = if (s %in% x_wt) "GSE183742_WT" else "GSE183742_mutant",
+                     stringsAsFactors = FALSE),
+          as.data.frame(ot_indices(x_ot_dcpm[, s, drop = FALSE])[, -1]),
+          as.data.frame(ot_flag_library(x_ot_dcpm[, s], x_ot_ref)))
+  }))
+  cat(sprintf("\n=== GSE183742 per library, by the Supp. Table 6 rule (reference: this study's adult WT + transparent Sey, n = %d) ===\n",
+              ncol(x_ot_ref)))
+  print(x_ot_duncan[, c("library_id", "group", "Kera", "Rho", "pigment",
+                        "contamination_flags")], row.names = FALSE)
+  write.csv(x_ot_duncan, file.path(X_OUT, "CrossDataset_GSE183742_OffTarget.csv"),
+            row.names = FALSE)
 } else {
-  cat("\n[skip] DISSECTION-MARGIN CHECK: org.Mm.eg.db / AnnotationDbi not available ",
-      "to map marker symbols.\n")
+  cat("\n[skip] DISSECTION-MARGIN CHECK: no margin markers defined in OFFTARGET_MARKERS.\n")
 }
 
 ## ---------------------------------------------------------------------------
@@ -867,6 +888,7 @@ if (!is.null(x_dir_tab)) {
 }
 if (file.exists(file.path(X_OUT, "CrossDataset_DissectionMargin.csv"))) {
   cat("  CrossDataset_DissectionMargin.csv       off-panel margin markers, every group\n")
+  cat("  CrossDataset_GSE183742_OffTarget.csv    GSE183742 per library, Supp. Table 6 rule\n")
 }
 cat("\nWhat this analysis CANNOT say: that a gene behaves identically in the\n")
 cat("two alleles. It says whether the same expressed/not-expressed calls are\n")

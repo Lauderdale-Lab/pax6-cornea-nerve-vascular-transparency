@@ -2,17 +2,18 @@
 ## 03_expression_status.R -- expressed / not expressed / indeterminate, and assessability
 ##
 ## Analysis pipeline for:
-##   Nerve remodeling in a Pax6 model of keratopathy
+##   Nerve and vascular abnormalities precede loss of corneal transparency
+##   in Pax6-haploinsufficient mice
 ##   Sneha K. Mohan, James D. Lauderdale
 ##
 ## James D. Lauderdale, PhD  (ORCID 0000-0001-7503-0528)
 ## Department of Cellular Biology, University of Georgia
 ## Athens, GA 30602, USA
 ##
-## Repository : <REPO_URL>
+## Repository : https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets
 ## Archived   : <ZENODO_DOI>
 ## Licence    : MIT (see LICENSE)
-## Contact    : <CONTACT_EMAIL>
+## Contact    : James D. Lauderdale, jdlauder@uga.edu
 ##
 ## Run the pipeline with run_all.R. Scripts are numbered in execution order and
 ## share one R session by design; see run_all.R for why.
