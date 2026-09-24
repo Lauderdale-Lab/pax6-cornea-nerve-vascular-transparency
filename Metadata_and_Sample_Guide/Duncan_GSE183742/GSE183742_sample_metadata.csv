@@ -1,0 +1,7 @@
+sample_id,geo_label,SRR_Run,GEO_Accession,Sample_Description,genotype,Allele,age,tissue,transparency,laboratory,batch,study
+SRR15826452,C_W,SRR15826452,GSM5570034,C,WT,WT,Adult,Cornea,not_reported,Duncan,GSE183742,GSE183742
+SRR15826453,C7_W,SRR15826453,GSM5570035,C7,WT,WT,Adult,Cornea,not_reported,Duncan,GSE183742,GSE183742
+SRR15826454,C8_W,SRR15826454,GSM5570036,C8,WT,WT,Adult,Cornea,not_reported,Duncan,GSE183742,GSE183742
+SRR15826449,C19_H,SRR15826449,GSM5570031,C19,Sey,tm1Pgr,Adult,Cornea,not_reported,Duncan,GSE183742,GSE183742
+SRR15826450,C20_H,SRR15826450,GSM5570032,C20,Sey,tm1Pgr,Adult,Cornea,not_reported,Duncan,GSE183742,GSE183742
+SRR15826451,C21_H,SRR15826451,GSM5570033,C21,Sey,tm1Pgr,Adult,Cornea,not_reported,Duncan,GSE183742,GSE183742
