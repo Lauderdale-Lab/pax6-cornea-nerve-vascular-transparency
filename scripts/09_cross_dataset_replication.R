@@ -8,7 +8,7 @@
 ## Study authors: Sneha K. Mohan, James D. Lauderdale
 ##
 ## Repository : https://github.com/Lauderdale-Lab/pax6-cornea-nerve-vascular-transparency
-## Archived   : <ZENODO_DOI>
+## Archived   : https://doi.org/10.5281/zenodo.22965379
 ## Licence    : MIT (see LICENSE)
 ## Contact    : James D. Lauderdale, jdlauder@uga.edu
 ##
