@@ -205,6 +205,13 @@ EQUIV_BOUND <- as.numeric(Sys.getenv("PAX6_EQUIV_BOUND", "0.585"))
 ## and can never be a per-sample factor.
 USE_SEX_COVARIATE <- as.logical(Sys.getenv("PAX6_USE_SEX_COVARIATE", "TRUE"))
 
+## Trigeminal ganglion (10_trigeminal.R). Two libraries per group, one batch:
+## the models carry no batch term, and by default no male-fraction covariate,
+## which would spend most of the remaining residual degrees of freedom. Each
+## library's male fraction is written to Trigeminal_SampleTable.csv instead.
+TRIGEMINAL_TISSUE <- "Trigeminal"
+TRIGEMINAL_SEX_COVARIATE <- as.logical(Sys.getenv("PAX6_TRIGEMINAL_SEX_COVARIATE", "FALSE"))
+
 ## Thirty gene symbols appear on more than one curated panel. Correcting each
 ## panel separately would give such a gene two adjusted P values for one test,
 ## and it can then be significant in one panel's table and not the other. Each

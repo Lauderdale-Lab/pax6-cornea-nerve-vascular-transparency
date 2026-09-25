@@ -104,20 +104,21 @@ STEPS <- data.frame(
            "02_shared_gene_assignment.R",
            "03_expression_status.R", "04_differential.R",
            "05_program_level.R", "06_developmental.R", "07_concordance.R",
-           "08_figures.R", "09_cross_dataset_replication.R"),
+           "08_figures.R", "09_cross_dataset_replication.R",
+           "10_trigeminal.R"),
   label = c("configuration", "panel universes", "load inputs",
             "library depth QC", "off-target tissue indices",
             "shared-gene assignment",
             "expression status", "differential expression",
             "program level", "developmental trajectories",
             "concordance with a replicate-aware analysis", "figures",
-            "cross-dataset replication"),
+            "cross-dataset replication", "trigeminal ganglion"),
   ## 07 is required: the figures read its verdicts. 01c is required: it writes
   ## Supp. Table 6 and defines the rule 09 uses.
   required = c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
-               FALSE, FALSE),
+               FALSE, FALSE, TRUE),
   needs_env = c("", "", "", "", "", "", "", "", "", "", "", "",
-                "PAX6_DUNCAN_COUNTS,PAX6_DUNCAN_META"),
+                "PAX6_DUNCAN_COUNTS,PAX6_DUNCAN_META", ""),
   stringsAsFactors = FALSE)
 
 message(strrep("=", 74))
