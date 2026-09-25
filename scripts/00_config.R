@@ -212,6 +212,19 @@ USE_SEX_COVARIATE <- as.logical(Sys.getenv("PAX6_USE_SEX_COVARIATE", "TRUE"))
 TRIGEMINAL_TISSUE <- "Trigeminal"
 TRIGEMINAL_SEX_COVARIATE <- as.logical(Sys.getenv("PAX6_TRIGEMINAL_SEX_COVARIATE", "FALSE"))
 
+## Tissue markers reported for every trigeminal library
+## (Trigeminal_TissueMarkers.csv). Central markers show carry-over of nerve
+## root or brainstem at dissection, which would raise the myelin structural
+## genes Mbp and Mag for a reason unrelated to genotype; myelinating Schwann-
+## cell markers show the peripheral glia those genes should come from. Symbols
+## are resolved exactly as for the off-target markers in 01c.
+TRIGEMINAL_TISSUE_MARKERS <- data.frame(
+  symbol = c("Mog", "Mobp", "Olig2", "Gfap",
+             "Prx", "Mpz", "Pmp22", "Egr2"),
+  role   = c(rep("central nervous system", 4),
+             rep("myelinating Schwann cell", 4)),
+  stringsAsFactors = FALSE)
+
 ## Thirty gene symbols appear on more than one curated panel. Correcting each
 ## panel separately would give such a gene two adjusted P values for one test,
 ## and it can then be significant in one panel's table and not the other. Each

@@ -60,10 +60,18 @@
 ##                      is a negative; C shows whether the same libraries and
 ##                      code detect differential expression where it exists.
 ##
-## Requires: 00_config.R, 01_load.R (meta, count_mat, panel_tbl) and
+## TISSUE MARKERS. Mbp and Mag are made by both Schwann cells and central
+## oligodendrocytes, so a ganglion carrying more nerve root or brainstem would
+## show them higher for a reason unrelated to genotype. Every library's CPM for
+## the markers in TRIGEMINAL_TISSUE_MARKERS is written out so that reading can
+## be checked against the data rather than assumed.
+##
+## Requires: 00_config.R, 01_load.R (meta, count_mat, lib_sizes, panel_tbl),
+##           01c_contamination_indices.R (ot_ids_by_symbol) and
 ##           04_differential.R (panel_primary).
 ## Outputs (results/Trigeminal/):
 ##   Trigeminal_SampleTable.csv      libraries used, with male fraction
+##   Trigeminal_TissueMarkers.csv    central and Schwann-cell marker CPM per library
 ##   Trigeminal_PanelResults.csv     one row per gene per panel per contrast
 ##   Trigeminal_PanelSummary.csv     outcomes by panel and contrast
 ##   Trigeminal_GenomeWide.csv       every contrast over all filtered genes
@@ -79,6 +87,10 @@
 
 if (!exists("count_mat") || !exists("panel_tbl")) {
   stop("Source 00_config.R and 01_load.R before 10_trigeminal.R.")
+}
+if (!exists("ot_ids_by_symbol")) {
+  stop("10_trigeminal.R needs ot_ids_by_symbol from 01c_contamination_indices.R; ",
+       "run the pipeline with run_all.R.")
 }
 if (!exists("panel_primary")) {
   stop("10_trigeminal.R needs panel_primary from 04_differential.R; run the ",
@@ -139,6 +151,35 @@ readr::write_csv(
                        batch, male_frac) %>%
     dplyr::arrange(age_group, tg_group, sample_id),
   tg_path("Trigeminal_SampleTable.csv"))
+
+## ---------------------------------------------------------------------------
+## 1b. Tissue markers: central carry-over and Schwann-cell content
+## ---------------------------------------------------------------------------
+
+tm <- TRIGEMINAL_TISSUE_MARKERS
+tm_missing <- setdiff(tm$symbol, names(ot_ids_by_symbol))
+if (length(tm_missing)) {
+  stop("Trigeminal tissue marker(s) not found among the count-matrix genes: ",
+       paste(tm_missing, collapse = ", "),
+       ". Correct TRIGEMINAL_TISSUE_MARKERS in 00_config.R.")
+}
+tm$gene_id <- vapply(tm$symbol, function(s) ot_ids_by_symbol[[s]][1], character(1))
+
+tg_ordered <- tg %>% dplyr::arrange(age_group, factor(tg_group, c("WT", "SeyT", "SeyO")),
+                                    sample_id)
+tm_cpm <- t(t(count_mat[tm$gene_id, tg_ordered$sample_id, drop = FALSE]) /
+              lib_sizes[tg_ordered$sample_id]) * 1e6
+rownames(tm_cpm) <- tm$symbol
+
+tissue_markers <- tg_ordered %>%
+  dplyr::select(sample_id, age_group, tg_group) %>%
+  dplyr::bind_cols(tibble::as_tibble(round(t(tm_cpm), 2)))
+readr::write_csv(tissue_markers, tg_path("Trigeminal_TissueMarkers.csv"))
+
+say("")
+say("Tissue markers, CPM (", paste(tm$symbol, tm$gene_id, sep = " = ", collapse = "; "), "):")
+say(paste(utils::capture.output(print(as.data.frame(tissue_markers), row.names = FALSE)),
+          collapse = "\n"))
 
 ## ---------------------------------------------------------------------------
 ## 2. Fitting
