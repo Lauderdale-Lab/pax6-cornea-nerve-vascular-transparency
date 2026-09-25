@@ -77,7 +77,7 @@ checks confirm it:
 
 - **Inputs.** `RunProvenance.txt` records the MD5 of the count matrix and
   metadata it read. Both should match
-  `docs/RunProvenance_v1.0.0_2026-09-24.txt`, the record of the run behind
+  `docs/RunProvenance_v1.0.0_2026-09-25.txt`, the record of the run behind
   the manuscript. That file also lists the R and package versions used.
 - **Panels.** The three curated panel master lists are committed in
   `Gene_Panels_and_Reference_Lists/master_lists/`. `00b` rebuilds each panel
@@ -281,7 +281,7 @@ developmental outputs so the de-duplication can be reproduced downstream.
 
 ## Change log
 
-**Version 1.0.0 (2026-09-24) is the first public release.** The entries below
+**Version 1.0.0 (2026-09-25) is the first public release.** The entries below
 record changes made during development, before release, so that any output
 produced earlier can be matched to the code that produced it.
 
@@ -370,7 +370,7 @@ if it is absent; `limma` (installed with `edgeR`) for the batch-removed view of
 the sample PCA, which is likewise skipped without it. `data.table` must be
 recent enough that `fread()` accepts `comment.char` (1.14.10 does not; the
 published run used 1.18.6.1). Exact versions used for the published results
-are recorded in `docs/RunProvenance_v1.0.0_2026-09-24.txt`.
+are recorded in `docs/RunProvenance_v1.0.0_2026-09-25.txt`.
 
 The study's count matrix is not included in this repository; sequencing data
 and the count matrix are deposited at GEO `<ACCESSION>`. The count matrices
