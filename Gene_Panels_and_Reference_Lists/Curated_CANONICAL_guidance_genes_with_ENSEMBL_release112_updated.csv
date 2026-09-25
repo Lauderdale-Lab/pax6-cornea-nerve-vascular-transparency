@@ -1,0 +1,93 @@
+Ensembl_ID,Mouse_Symbol,Category,Subcategory_or_Pathway,Evidence_Source
+ENSMUSG00000031391,L1cam,CAM (L1/NCAM family),Adhesion molecule,Molecular basis of Mitomycin C enhanced corneal sensory nerve repair after debridement wounding. Sci. Rep. 2018.
+ENSMUSG00000039542,Ncam1,CAM (L1/NCAM family),Adhesion molecule,Corneal Epithelial Cells Function as Surrogate Schwann Cells for their Sensory Nerves. Glia 2017 (PMC5395310).
+ENSMUSG00000020598,Nrcam,CAM (L1/NCAM family),Adhesion molecule,"Demyanenko, G.P. et al. NrCAM Promotes Topographic Retinocollicular Mapping. PMC3759449."
+ENSMUSG00000027954,Efna1,Ephrin/Eph,Ligand,"Egea, J.; Klein, R. Trends Cell Biol. 2007, 17, 230-238."
+ENSMUSG00000003070,Efna2,Ephrin/Eph,Ligand,"Egea, J.; Klein, R. Trends Cell Biol. 2007."
+ENSMUSG00000028039,Efna3,Ephrin/Eph,Ligand,Roles of Eph/ephrin bidirectional signaling in CNS injury and recovery. Exp. Ther. Med. 2018.
+ENSMUSG00000028040,Efna4,Ephrin/Eph,Ligand,"Egea, J.; Klein, R. Trends Cell Biol. 2007."
+ENSMUSG00000048915,Efna5,Ephrin/Eph,Ligand,"Jayasena, C.S. et al. Neuroscience 2005, 135, 97-109."
+ENSMUSG00000031217,Efnb1,Ephrin/Eph,Ligand,Proangiogenic Role of ephrinB1/EphB1 in Basic Fibroblast Growth Factor-Induced Corneal Angiogenesis. PMC1851865.
+ENSMUSG00000001300,Efnb2,Ephrin/Eph,Ligand,Eph-ephrin signaling couples endothelial cell sorting and arterial specification. Nat. Commun. 2024.
+ENSMUSG00000003934,Efnb3,Ephrin/Eph,Ligand,"Egea, J.; Klein, R. Cell 2008, 133, 38-51."
+ENSMUSG00000006445,Epha2,Ephrin/Eph,Receptor,EphA2/Ephrin-A1 Signaling Complexes Restrict Corneal Epithelial Cell Migration. IOVS 2012.
+ENSMUSG00000052504,Epha3,Ephrin/Eph,Receptor,"Jayasena, C.S. et al. Neuroscience 2005; Kaczmarek, R. et al. Int. J. Mol. Sci. 2021."
+ENSMUSG00000026235,Epha4,Ephrin/Eph,Receptor,"Egea, J.; Klein, R. Cell 2008, 133, 38-51."
+ENSMUSG00000032537,Ephb1,Ephrin/Eph,Receptor,The Role of Eph Receptors and Ephrins in Corneal Physiology and Diseases. IJMS 2021; Proangiogenic Role of ephrinB1/EphB1... PMC1851865.
+ENSMUSG00000028664,Ephb2,Ephrin/Eph,Receptor,Roles of Eph/ephrin bidirectional signaling in central nervous system injury and recovery. 2018.
+ENSMUSG00000005958,Ephb3,Ephrin/Eph,Receptor,Roles of Eph/ephrin bidirectional signaling in central nervous system injury and recovery. 2018.
+ENSMUSG00000029710,Ephb4,Ephrin/Eph,Receptor,Evaluation of Eph receptor and ephrin expression within the human cornea and limbus. Exp. Eye Res. 2013.
+ENSMUSG00000013033,Adgrl1,FLRT/Latrophilin,Adhesion molecule,Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016.
+ENSMUSG00000028184,Adgrl2,FLRT/Latrophilin,Adhesion molecule,Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016.
+ENSMUSG00000037605,Adgrl3,FLRT/Latrophilin,Adhesion molecule,"Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016, 7, 11184."
+ENSMUSG00000022687,Boc,Hedgehog,Receptor,"Okada, A. et al. Nature 2006, 444, 369-373."
+ENSMUSG00000052957,Gas1,Hedgehog,Co-receptor,Gas1 is a receptor for sonic hedgehog to repel enteric axons. PNAS 2015.
+ENSMUSG00000060534,Dcc,Netrin,Receptor,"Finci, L. et al. Prog. Biophys. Mol. Biol. 2015, 118, 153-160."
+ENSMUSG00000050272,Dscam,Netrin,Co-receptor,DSCAM promotes self-avoidance in the developing mouse retina. PNAS 2018.
+ENSMUSG00000032340,Neo1,Netrin,Receptor,Role of Netrin-1 Signaling in Nerve Regeneration. (review).
+ENSMUSG00000020902,Ntn1,Netrin,Ligand,"Boyer, N.P.; Gupton, S.L. Revisiting Netrin-1. Front. Cell Neurosci. 2018, 12, 221."
+ENSMUSG00000020019,Ntn4,Netrin,Ligand,"Xiao, C. et al. Netrin-4 Modulates Corneal Wound Healing. FASEB Bioadv. 2025, 7, e70021."
+ENSMUSG00000025876,Unc5a,Netrin,Receptor,UNC5C: Novel Gene Associated with Psychiatric Disorders. 2024.
+ENSMUSG00000020099,Unc5b,Netrin,Receptor,Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016.
+ENSMUSG00000059921,Unc5c,Netrin,Receptor,UNC5C: Novel Gene Associated with Psychiatric Disorders. 2024.
+ENSMUSG00000063626,Unc5d,Netrin,Receptor,"Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016, 7, 11184."
+ENSMUSG00000028519,Dab1,Other,Adaptor,The ApoE receptors Vldlr and Apoer2 in central nervous system function. J. Lipid Res.
+ENSMUSG00000047787,Flrt1,Other,Adhesion molecule,Structural Basis of Latrophilin-FLRT-UNC5 Interaction in Cell Adhesion. Structure 2015.
+ENSMUSG00000047414,Flrt2,Other,Adhesion molecule,Expression of FLRT2 in Postnatal Central Nervous System Development and After Spinal Cord Injury. PMC8569257.
+ENSMUSG00000051379,Flrt3,Other,Adhesion molecule,Structural Basis of Latrophilin-FLRT-UNC5 Interaction in Cell Adhesion. Structure 2015.
+ENSMUSG00000042453,Reln,Other,Ligand,Reelin expression is upregulated following ocular tissue injury. Mayo Clinic / Univ. Illinois Chicago study.
+ENSMUSG00000002633,Shh,Other,Ligand,Sonic hedgehog expression and role in healing corneal epithelium. IOVS 2004.
+ENSMUSG00000028613,Lrp8,Reelin,Receptor,ApoER2 and VLDLr Are Required for Mediating Reelin Signalling Pathway. PLOS ONE 2013.
+ENSMUSG00000024924,Vldlr,Reelin,Receptor,ApoER2 and VLDLr Are Required for Mediating Reelin Signalling Pathway. PLOS ONE 2013.
+ENSMUSG00000025810,Nrp1,Semaphorin,Co-receptor,Neuropilins lock secreted semaphorins onto plexins in a ternary signaling complex.
+ENSMUSG00000025969,Nrp2,Semaphorin,Co-receptor,Neuropilins lock secreted semaphorins onto plexins in a ternary signaling complex.
+ENSMUSG00000030084,Plxna1,Semaphorin,Receptor,A putative structural mechanism underlying RND1/RhoD in plexin regulation. 2021.
+ENSMUSG00000026640,Plxna2,Semaphorin,Receptor,Architecture of the Sema3A/PlexinA4/Neuropilin tripartite complex. Nat. Commun. 2021.
+ENSMUSG00000031398,Plxna3,Semaphorin,Receptor,A putative structural mechanism underlying RND1/RhoD in plexin regulation. 2021.
+ENSMUSG00000029765,Plxna4,Semaphorin,Receptor,Architecture of the Sema3A/PlexinA4/Neuropilin tripartite complex. Nat. Commun. 2021.
+ENSMUSG00000053646,Plxnb1,Semaphorin,Receptor,Protection of Barrier Function in Cultured Human Corneal Epithelial Cells by Semaphorin 4D. 2023.
+ENSMUSG00000036606,Plxnb2,Semaphorin,Receptor,Semaphorin 4C Plexin-B2 signaling in peripheral sensory neurons is pronociceptive. Nat. Commun. 2017.
+ENSMUSG00000031385,Plxnb3,Semaphorin,Receptor,Semaphorin 4C Plexin-B2 signaling in peripheral sensory neurons is pronociceptive. Nat. Commun. 2017 (B-family plexin overview).
+ENSMUSG00000028883,Sema3a,Semaphorin,Other,Architecture of the Sema3A/PlexinA4/Neuropilin tripartite complex. Nat. Commun. 2021.
+ENSMUSG00000034684,Sema3f,Semaphorin,Other,Semaphorin3A induces nerve regeneration in the adult cornea. PLOS ONE 2018 (class 3 semaphorin family survey).
+ENSMUSG00000021451,Sema4d,Semaphorin,Other,Protection of Barrier Function in Cultured Human Corneal Epithelial Cells by Semaphorin 4D. 2023.
+ENSMUSG00000019647,Sema6a,Semaphorin,Other,Neuropilins lock secreted semaphorins onto plexins in a ternary signaling complex.
+ENSMUSG00000022883,Robo1,Slit,Receptor,The role of Slit-Robo signaling in the regulation of tissue barriers. Tissue Barriers 2017.
+ENSMUSG00000052516,Robo2,Slit,Receptor,"Howard, L.J. et al. Genesis 2021."
+ENSMUSG00000032128,Robo3,Slit,Receptor,The multifaceted roles of Slits and Robos in cortical circuits. Curr. Opin. Neurobiol. 2014.
+ENSMUSG00000032125,Robo4,Slit,Receptor,The Role of SLIT3-ROBO4 Signaling in ER Stress-Induced Delayed Corneal Epithelial and Nerve Regeneration. IOVS 2024.
+ENSMUSG00000025020,Slit1,Slit,Ligand,Beyond Axon Guidance: Roles of Slit-Robo Signaling in Neocortical Formation. Front. Cell Dev. Biol. 2020.
+ENSMUSG00000031558,Slit2,Slit,Ligand,Protective effects of Slit2 on corneal epithelium and nerves in diabetic mice. CJEO 2022.
+ENSMUSG00000056427,Slit3,Slit,Ligand,The Role of SLIT3-ROBO4 Signaling in ER Stress-Induced Delayed Corneal Epithelial and Nerve Regeneration. IOVS 2024.
+ENSMUSG00000021464,Ror2,Wnt,Receptor,"Green, J.L. et al. Cold Spring Harb. Perspect. Biol. 2013; Identification of Wnt-5a Receptors... PMC11875028."
+ENSMUSG00000032547,Ryk,Wnt,Co-receptor,"Green, J.L. et al. Cold Spring Harb. Perspect. Biol. 2013."
+ENSMUSG00000021994,Wnt5a,Wnt,Ligand,Identification of Wnt-5a Receptors Important in Diabetic and Non-Diabetic Corneal Epithelial Wound Healing. 2025 (PMC11875028); Reversal of dual epigenetic repression of non-canonical Wnt-5a... 2023 (PMC10474199).
+ENSMUSG00000117406,Ntn3,Netrin,Ligand,Kappler J. et al. Eur J Neurosci. 2000;12(2):491-501 (Netrin family characterization)
+ENSMUSG00000070564,Ntn5,Netrin,Ligand,"Wikipedia: NTN5 (Netrin-5), summarizing primary literature on neurogenesis and migration roles"
+ENSMUSG00000059857,Ntng1,Netrin,GPI-anchored ligand,GeneCards: NTNG1; Nakashiba T. et al. J Neurosci. 2000 (Netrin-G1 characterization)
+ENSMUSG00000035513,Ntng2,Netrin,GPI-anchored ligand,Wikipedia: Netrin G2
+ENSMUSG00000057969,Sema3b,Semaphorin,"Ligand (secreted, Class 3)",OMIM 601281 SEMA3B; Gong S. et al. (BAC transgenic CNS gene expression atlas)
+ENSMUSG00000028780,Sema3c,Semaphorin,"Ligand (secreted, Class 3)",Wikipedia: SEMA3C
+ENSMUSG00000040254,Sema3d,Semaphorin,"Ligand (secreted, Class 3)",Rat Genome Database: Sema3d gene page
+ENSMUSG00000063531,Sema3e,Semaphorin,"Ligand (secreted, Class 3)",GeneCards: SEMA3E
+ENSMUSG00000021904,Sema3g,Semaphorin,"Ligand (secreted, Class 3)",GeneCards: SEMA3G
+ENSMUSG00000028064,Sema4a,Semaphorin,"Ligand (transmembrane, Class 4)",GeneCards: SEMA4A gene
+ENSMUSG00000030539,Sema4b,Semaphorin,"Ligand (transmembrane, Class 4)",Wikipedia: SEMA4B
+ENSMUSG00000026121,Sema4c,Semaphorin,"Ligand (transmembrane, Class 4)",GeneCards: SEMA4C
+ENSMUSG00000000627,Sema4f,Semaphorin,"Ligand (transmembrane, Class 4)",Wikipedia: SEMA4F
+ENSMUSG00000025207,Sema4g,Semaphorin,"Ligand (transmembrane, Class 4)",Wikipedia: SEMA4G
+ENSMUSG00000022231,Sema5a,Semaphorin,"Ligand (transmembrane, Class 5)",Ensembl/MGI: Sema5a gene page
+ENSMUSG00000052133,Sema5b,Semaphorin,"Ligand (transmembrane, Class 5)",Rat Genome Database: Sema5b gene page
+ENSMUSG00000001227,Sema6b,Semaphorin,"Ligand (transmembrane, Class 6)",GeneCards: SEMA6B
+ENSMUSG00000038777,Sema6c,Semaphorin,"Ligand (transmembrane, Class 6)",Frontiers in Molecular Neuroscience: Semaphorin Signaling in Vertebrate Neural Circuit Assembly
+ENSMUSG00000027200,Sema6d,Semaphorin,"Ligand (transmembrane, Class 6)",Frontiers in Molecular Neuroscience: Semaphorin Signaling in Vertebrate Neural Circuit Assembly
+ENSMUSG00000038264,Sema7a,Semaphorin,"Ligand (GPI-anchored, Class 7)",Frontiers in Physiology: Semaphorins and Their Receptors: From Axonal Guidance to Atherosclerosis
+ENSMUSG00000074785,Plxnc1,Semaphorin,Receptor,ScienceDirect Topics: Semaphorin overview (plexin subfamily classification)
+ENSMUSG00000029859,Epha1,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPH receptor A1
+ENSMUSG00000029245,Epha5,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPH receptor A5
+ENSMUSG00000055540,Epha6,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPHA6
+ENSMUSG00000028289,Epha7,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPHA7
+ENSMUSG00000028661,Epha8,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPHA8
+ENSMUSG00000029869,Ephb6,Ephrin/Eph,Receptor (kinase-dead pseudo-tyrosine kinase),Wikipedia: EPHB6
+ENSMUSG00000061353,Cxcl12,Chemokine guidance,Ligand,Wikipedia: Stromal cell-derived factor 1
+ENSMUSG00000045382,Cxcr4,Chemokine guidance,Receptor,PMC: Loss of CXCL12/CXCR4 signalling impacts cardiovascular development (Rada-Iglesias lab / cardiovascular study)
