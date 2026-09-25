@@ -1,5 +1,5 @@
 # Outputs written by the pipeline
-Pax6_dtu_results/
+results/
 
 # Count matrices are data, not code. The GSE183742 matrix is kept
 # deliberately; the study's own matrix comes from GEO.
