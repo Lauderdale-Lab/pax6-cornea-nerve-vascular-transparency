@@ -156,7 +156,7 @@ prog_contrasts <- CONTRASTS[CONTRASTS$label != HINGE[["A"]] &
                             CONTRASTS$cell_a %in% names(cell_status_genomewide) &
                             CONTRASTS$cell_b %in% names(cell_status_genomewide), ,
                             drop = FALSE]
-panels <- names(PANEL_DIRS)
+panels <- names(PANEL_MASTER_FILES)
 n_blocks <- nrow(prog_contrasts) * length(panels)
 block <- 0L
 

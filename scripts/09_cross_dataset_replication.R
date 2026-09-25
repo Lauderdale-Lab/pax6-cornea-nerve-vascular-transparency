@@ -69,7 +69,7 @@
 ##   source("09_cross_dataset_replication.R")
 ##
 ##   Requires 00_config.R, 01_load.R, 01c_contamination_indices.R and a
-##   completed ThreeState_Release run (ExpressionCalls.csv must exist) for the
+##   completed run of the pipeline (ExpressionCalls.csv must exist) for the
 ##   Lauderdale side.
 ## ---------------------------------------------------------------------------
 

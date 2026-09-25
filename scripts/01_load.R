@@ -182,18 +182,18 @@ meta <- meta %>%
 ## Curated panels
 ## --------------------------------------------------------------------------
 
-missing_panels <- vapply(PANEL_DIRS, function(d)
-  !file.exists(file.path(PAPER_ROOT, d, "GenesOfInterest_Master_List.csv")), logical(1))
+missing_panels <- vapply(PANEL_MASTER_FILES, function(f)
+  !file.exists(file.path(PANEL_MASTER_DIR, f)), logical(1))
 if (any(missing_panels)) {
   stop("Panel master list(s) not found:\n  ",
-       paste(file.path(PAPER_ROOT, PANEL_DIRS[missing_panels],
-                       "GenesOfInterest_Master_List.csv"), collapse = "\n  "),
-       "\nRun 02_panel_universes.R first. On a cloud-synced volume the file may ",
+       paste(file.path(PANEL_MASTER_DIR, PANEL_MASTER_FILES[missing_panels]),
+             collapse = "\n  "),
+       "\nRun 00b_panel_universes.R first. On a cloud-synced volume the file may ",
        "be present but evicted; download it before re-running.")
 }
 
-panel_tbl <- purrr::imap(PANEL_DIRS, function(subdir, label) {
-  d <- readr::read_csv(file.path(PAPER_ROOT, subdir, "GenesOfInterest_Master_List.csv"),
+panel_tbl <- purrr::imap(PANEL_MASTER_FILES, function(master_file, label) {
+  d <- readr::read_csv(file.path(PANEL_MASTER_DIR, master_file),
                        show_col_types = FALSE) %>% janitor::clean_names()
   tibble::tibble(panel = label,
                  gene_id = base::sub("\\.[0-9]+$", "", d$gene_id),
@@ -207,7 +207,7 @@ for (nm in names(PANEL_SIZES)) {
   if (got != PANEL_SIZES[[nm]]) {
     stop(nm, ": master list holds ", got, " genes, expected ", PANEL_SIZES[[nm]],
          ". Every denominator in the analysis depends on this. Re-run ",
-         "02_panel_universes.R.")
+         "00b_panel_universes.R.")
   }
 }
 

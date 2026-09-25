@@ -138,11 +138,11 @@ primary_map <- if (length(PANEL_PRIMARY)) {
 } else stats::setNames(character(0), character(0))
 
 assigned <- primary_map[shared_symbols]
-bad <- shared_symbols[!is.na(assigned) & !(assigned %in% names(PANEL_DIRS))]
+bad <- shared_symbols[!is.na(assigned) & !(assigned %in% names(PANEL_MASTER_FILES))]
 if (length(bad)) {
   stop("PANEL_PRIMARY names a panel that does not exist, for: ",
        paste(bad, collapse = ", "), ". Valid panels: ",
-       paste(names(PANEL_DIRS), collapse = ", "))
+       paste(names(PANEL_MASTER_FILES), collapse = ", "))
 }
 unassigned <- shared_symbols[is.na(assigned)]
 

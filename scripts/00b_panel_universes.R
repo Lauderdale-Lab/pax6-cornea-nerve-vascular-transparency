@@ -22,7 +22,7 @@
 ###############################################################################
 ## 00b_panel_universes.R
 ##
-## Writes GenesOfInterest_Master_List.csv for each of the three curated panels.
+## Writes a master list for each of the three curated panels.
 ## These three files define the gene universes for the entire analysis, and
 ## every denominator in the paper is one of their sizes. Nothing downstream can
 ## run until they exist, which is why this step comes before the data are loaded.
@@ -61,7 +61,7 @@
 ## with the curated lists.
 ##
 ## Inputs : 00_config.R, and the curated CSVs named in PANEL_SOURCE_FILES
-## Outputs: <PAPER_ROOT>/<panel subdir>/GenesOfInterest_Master_List.csv  (x3)
+## Outputs: <PANEL_MASTER_DIR>/<panel>_Master_List.csv  (x3)
 ##          <OUT_ROOT>/PanelUniverses_BuildReport.txt
 ###############################################################################
 
@@ -78,7 +78,7 @@ say <- function(...) { t <- paste0(...); message(t); log_lines <<- c(log_lines, 
 
 say("=== Panel universes ===")
 say("Gene panel directory : ", GENE_PANEL_DIR)
-say("Written to           : ", PAPER_ROOT)
+say("Written to           : ", PANEL_MASTER_DIR)
 
 strip_version <- function(x) base::sub("\\.[0-9]+$", "", as.character(x))
 
@@ -288,8 +288,8 @@ for (label in names(BUILDERS)) {
                                     label, nrow(genes), expected))
   }
 
-  out_dir <- file.path(PAPER_ROOT, PANEL_DIRS[[label]])
-  out_csv <- file.path(out_dir, "GenesOfInterest_Master_List.csv")
+  out_dir <- PANEL_MASTER_DIR
+  out_csv <- file.path(out_dir, PANEL_MASTER_FILES[[label]])
   if (file.exists(out_csv)) {
     existing <- readr::read_csv(out_csv, show_col_types = FALSE) %>% janitor::clean_names()
     existing_ids <- strip_version(existing$gene_id)

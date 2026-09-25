@@ -40,32 +40,37 @@
 PROJECT_NAME <- Sys.getenv("PAX6_PROJECT_NAME", unset = "Combined_2025_2026")
 
 ## Where the analysis scripts live. Used to locate PanelPrimaryAssignment.R.
-SCRIPT_DIR <- Sys.getenv("PAX6_SCRIPT_DIR", unset = getwd())
+## Resolution order: PAX6_SCRIPT_DIR if set; otherwise scripts/ under the
+## working directory when it exists (a clone of the repository, run from its
+## root); otherwise the working directory itself.
+SCRIPT_DIR <- local({
+  explicit <- Sys.getenv("PAX6_SCRIPT_DIR", unset = "")
+  if (nzchar(explicit)) explicit
+  else if (file.exists(file.path("scripts", "00_config.R"))) "scripts"
+  else getwd()
+})
+SCRIPT_DIR <- normalizePath(SCRIPT_DIR, mustWork = FALSE)
 
 resolve_project_root <- function() {
   explicit <- Sys.getenv("PAX6_PROJECT_ROOT", unset = NA_character_)
   if (!is.na(explicit) && nzchar(explicit)) {
     return(normalizePath(path.expand(explicit), mustWork = FALSE))
   }
-  candidates <- c(
-    "~/Library/Mobile Documents/com~apple~CloudDocs/PAX6 Cornea and Trigeminal RNAseq Quant and Proteomics Data/Mouse_PAX6_Cornea_Trigeminal_RNAseq",
-    "~/OneDrive/PAX6_Project/Mouse_PAX6_Cornea_Trigeminal_RNAseq",
-    "~/Dropbox/PAX6_Project/Mouse_PAX6_Cornea_Trigeminal_RNAseq")
-  for (cnd in candidates) {
-    p <- path.expand(cnd)
-    if (dir.exists(p)) return(normalizePath(p, mustWork = FALSE))
-  }
+  ## No machine-specific fallbacks: the project root is the working directory
+  ## unless PAX6_PROJECT_ROOT says otherwise, so a run always analyses the
+  ## copy of the data it was started from.
   normalizePath(getwd(), mustWork = FALSE)
 }
 
 PROJECT_ROOT <- resolve_project_root()
-PAPER_ROOT   <- file.path(PROJECT_ROOT, "Pax6_dtu_results",
-                          paste0("Module3_Standalone_", PROJECT_NAME), "Paper_Exports")
 
-## Release outputs are written to their own directory so that a run of the
-## rebuilt pipeline never overwrites the outputs of the pipeline it replaces.
-## The two can therefore be compared directly.
-OUT_ROOT <- file.path(PAPER_ROOT, Sys.getenv("PAX6_OUT_SUBDIR", "ThreeState_Release"))
+## Every output of a run is written under results/. Set PAX6_OUT_SUBDIR to
+## write a run to results/<name> instead, so that two runs (a sensitivity
+## analysis, say) never overwrite each other and can be compared directly.
+OUT_SUBDIR <- Sys.getenv("PAX6_OUT_SUBDIR", unset = "")
+OUT_ROOT <- if (nzchar(OUT_SUBDIR)) {
+  file.path(PROJECT_ROOT, "results", OUT_SUBDIR)
+} else file.path(PROJECT_ROOT, "results")
 
 GENE_PANEL_DIR <- Sys.getenv("PAX6_GENE_PANEL_DIR",
                              unset = file.path(PROJECT_ROOT, "Gene_Panels_and_Reference_Lists"))
@@ -75,13 +80,16 @@ FILE_METADATA <- file.path(PROJECT_ROOT, "Metadata_and_Sample_Guide", PROJECT_NA
 FILE_COUNTS   <- file.path(PROJECT_ROOT, "RNAseq_Quantification_Matrices", PROJECT_NAME,
                            "gene_counts_featureCounts_all48.txt")
 
-## Curated panels. Each directory holds a GenesOfInterest_Master_List.csv
-## written by 02_panel_universes.R. The expected sizes are asserted at load
-## time: a master list that has silently changed size invalidates every
-## denominator in the paper.
-PANEL_DIRS <- c("Axon guidance"      = "AxonGuidance_GenotypeByAge",
-                "Myelination"        = "Myelination_GenotypeByAge",
-                "Vascular/Lymphatic" = "VascularLymphatic_GenotypeByAge")
+## Curated panels. 00b_panel_universes.R builds each panel from its curated
+## CSV and writes it as a master list in PANEL_MASTER_DIR; every later script
+## reads the master lists, never the CSVs. The master lists are committed with
+## the repository, so a rebuilt panel is checked against the published one.
+## The expected sizes are asserted at load time: a master list that has
+## silently changed size invalidates every denominator in the paper.
+PANEL_MASTER_DIR <- file.path(GENE_PANEL_DIR, "master_lists")
+PANEL_MASTER_FILES <- c("Axon guidance"      = "AxonGuidance_Master_List.csv",
+                        "Myelination"        = "Myelination_Master_List.csv",
+                        "Vascular/Lymphatic" = "VascularLymphatic_Master_List.csv")
 PANEL_SIZES <- c("Axon guidance" = 92L, "Myelination" = 25L, "Vascular/Lymphatic" = 177L)
 
 ## Curated source files, read by 00b_panel_universes.R from GENE_PANEL_DIR. The

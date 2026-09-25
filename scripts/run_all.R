@@ -80,9 +80,17 @@
 
 run_started <- Sys.time()
 
+## Where the numbered scripts live: PAX6_SCRIPT_DIR if set; otherwise scripts/
+## under the working directory when it exists (a clone of the repository, run
+## from its root); otherwise the working directory. The result is exported so
+## that 00_config.R resolves the same directory.
 SCRIPT_DIR <- if (nzchar(Sys.getenv("PAX6_SCRIPT_DIR"))) {
   Sys.getenv("PAX6_SCRIPT_DIR")
+} else if (file.exists(file.path("scripts", "run_all.R"))) {
+  "scripts"
 } else getwd()
+SCRIPT_DIR <- normalizePath(SCRIPT_DIR, mustWork = FALSE)
+Sys.setenv(PAX6_SCRIPT_DIR = SCRIPT_DIR)
 
 ## Steps in execution order. `required` marks a step whose absence is fatal;
 ## the two front-end steps are optional so that a working tree missing them

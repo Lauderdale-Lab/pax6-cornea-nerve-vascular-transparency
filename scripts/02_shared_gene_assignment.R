@@ -73,14 +73,14 @@ suppressPackageStartupMessages({
 })
 
 if (!exists("panel_tbl")) stop("Source 00_config.R and 01_load.R first.")
-if (!all(PANEL_PRECEDENCE %in% names(PANEL_DIRS))) {
+if (!all(PANEL_PRECEDENCE %in% names(PANEL_MASTER_FILES))) {
   stop("PANEL_PRECEDENCE names a panel that does not exist. Valid panels: ",
-       paste(names(PANEL_DIRS), collapse = ", "))
+       paste(names(PANEL_MASTER_FILES), collapse = ", "))
 }
-if (!setequal(PANEL_PRECEDENCE, names(PANEL_DIRS))) {
+if (!setequal(PANEL_PRECEDENCE, names(PANEL_MASTER_FILES))) {
   stop("PANEL_PRECEDENCE must list every panel exactly once, so that no gene ",
        "can be left unassigned. Missing: ",
-       paste(setdiff(names(PANEL_DIRS), PANEL_PRECEDENCE), collapse = ", "))
+       paste(setdiff(names(PANEL_MASTER_FILES), PANEL_PRECEDENCE), collapse = ", "))
 }
 
 ## ---------------------------------------------------------------------------
@@ -98,7 +98,7 @@ membership <- panel_tbl %>%
 shared <- membership %>% dplyr::filter(n_panels > 1)
 
 message("Panel membership: ", nrow(membership), " unique symbols across ",
-        length(PANEL_DIRS), " panels; ", nrow(shared), " on more than one.")
+        length(PANEL_MASTER_FILES), " panels; ", nrow(shared), " on more than one.")
 if (!nrow(shared)) {
   message("No shared genes. PANEL_PRIMARY can stay empty."); return(invisible(NULL))
 }
@@ -122,7 +122,7 @@ if (nrow(ambiguous)) {
 ## would silently produce an empty correction family for it.
 if (nrow(PANEL_PRIMARY_OVERRIDE)) {
   ov <- PANEL_PRIMARY_OVERRIDE
-  unknown_panel <- ov$symbol[!ov$panel %in% names(PANEL_DIRS)]
+  unknown_panel <- ov$symbol[!ov$panel %in% names(PANEL_MASTER_FILES)]
   if (length(unknown_panel)) {
     stop("PANEL_PRIMARY_OVERRIDE names a panel that does not exist, for: ",
          paste(unknown_panel, collapse = ", "))
@@ -237,7 +237,7 @@ if (nrow(by_order)) {
 ## Benjamini-Hochberg family and therefore a more permissive threshold for the
 ## genes it keeps, so this table belongs in the record even though the effect is
 ## a consequence of removing duplicate tests rather than a choice in itself.
-family_change <- purrr::map_dfr(names(PANEL_DIRS), function(p) {
+family_change <- purrr::map_dfr(names(PANEL_MASTER_FILES), function(p) {
   on_panel <- panel_tbl$symbol[panel_tbl$panel == p]
   keeps <- sum(assignment$primary_panel[assignment$symbol %in% on_panel] == p) +
            sum(!on_panel %in% assignment$symbol)

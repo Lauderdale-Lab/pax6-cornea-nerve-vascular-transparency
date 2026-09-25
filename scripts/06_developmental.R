@@ -292,7 +292,7 @@ if (nrow(undet)) {
 ## two panels appears under both, so that a reader consulting one panel's table
 ## sees it. `primary_panel` is carried alongside so that any count taken ACROSS
 ## panels can be de-duplicated without re-deriving the assignment -- see the
-## totals below, and 07_figures.R, which colours one row per gene.
+## totals below, and 08_figures.R, which colours one row per gene.
 crossings <- step_assessability %>%
   dplyr::filter(startsWith(assessable, "status crossing")) %>%
   dplyr::inner_join(panel_tbl, by = "gene_id", relationship = "many-to-many") %>%
