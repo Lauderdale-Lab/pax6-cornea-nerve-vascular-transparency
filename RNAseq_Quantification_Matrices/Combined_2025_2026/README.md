@@ -9,7 +9,7 @@ study (34 cornea, 14 trigeminal ganglion), counted against GENCODE vM25 on
 GRCm38. The scripts that produced it from the raw reads are in [pax6-cornea-trigeminal-rnaseq-upstream](https://github.com/Lauderdale-Lab/pax6-cornea-trigeminal-rnaseq-upstream).
 
 **Where to get it:** download it from the processed-data files of GEO series
-`<ACCESSION>` and save it here under the name above, unchanged.
+[GSE348661](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE348661) and save it here under the name above, unchanged.
 
 **Check it is the right file:** its MD5 checksum should be
 
