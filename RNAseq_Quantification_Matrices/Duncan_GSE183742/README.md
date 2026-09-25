@@ -1,24 +1,22 @@
-# Count matrix for GSE183742 (not stored in this repository)
+# Count matrix for GSE183742
 
 The optional cross-dataset check (`scripts/09_cross_dataset_replication.R`)
-expects one file in this folder:
+reads one file in this folder, which is included in this repository:
 
     gene_counts_featureCounts.txt
 
 It is NOT a file distributed by GEO. It was produced by this study from the raw
 reads of GEO series GSE183742 (Krishnan A, Faranda AP, Novo SG, Wang Y,
 Duncan MK; SRA SRP336260; six adult cornea libraries), using the same
-alignment and counting pipeline as this study's own data (`upstream/`), with
+alignment and counting pipeline as this study's own data ([pax6-cornea-trigeminal-rnaseq-upstream](https://github.com/Lauderdale-Lab/pax6-cornea-trigeminal-rnaseq-upstream)), with
 strandedness set to reverse (`-s 2`) because those libraries are
 ribo-depleted and stranded.
 
-**Where to get it:** download it from the Zenodo record `<ZENODO_DATA_DOI>` and
-save it here under the name above, or regenerate it from SRA SRP336260 with the
-scripts in `upstream/`.
+**To regenerate it** from SRA SRP336260, use the scripts in [pax6-cornea-trigeminal-rnaseq-upstream](https://github.com/Lauderdale-Lab/pax6-cornea-trigeminal-rnaseq-upstream).
 
 **Check it is the right file:** its MD5 checksum should be
 
-    <MD5 of gene_counts_featureCounts.txt>
+    bdb3e653f08241a9951322a5ea73b795
 
 Then point the pipeline at it before running:
 
