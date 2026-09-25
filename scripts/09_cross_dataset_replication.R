@@ -7,7 +7,7 @@
 ##         transparency in Pax6-haploinsufficient mice"
 ## Study authors: Sneha K. Mohan, James D. Lauderdale
 ##
-## Repository : https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets
+## Repository : https://github.com/Lauderdale-Lab/pax6-cornea-nerve-vascular-transparency
 ## Archived   : <ZENODO_DOI>
 ## Licence    : MIT (see LICENSE)
 ## Contact    : James D. Lauderdale, jdlauder@uga.edu

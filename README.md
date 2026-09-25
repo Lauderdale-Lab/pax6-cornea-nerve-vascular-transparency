@@ -6,7 +6,7 @@ R code for the curated-panel RNA-seq analysis reported in:
 > Sneha K. Mohan, James D. Lauderdale
 > Department of Cellular Biology, University of Georgia, Athens, GA 30602, USA
 
-Repository: <https://github.com/Lauderdale-Lab/pax6-mouse-cornea-trigeminal-genesets> · Archived release: `<ZENODO_DOI>` · Contact: James D. Lauderdale, <jdlauder@uga.edu>
+Repository: <https://github.com/Lauderdale-Lab/pax6-cornea-nerve-vascular-transparency> · Archived release: `<ZENODO_DOI>` · Contact: James D. Lauderdale, <jdlauder@uga.edu>
 
 Licensed under the MIT License — see [`LICENSE`](LICENSE).
 
