@@ -1,0 +1,93 @@
+gene_id,symbol_curated,category,subcategory,evidence_source,symbol_evidence,human_ensembl_id,cell_type,evidence,source,symbol,known_cornea_expressed
+ENSMUSG00000031391,L1cam,CAM (L1/NCAM family),Adhesion molecule,Molecular basis of Mitomycin C enhanced corneal sensory nerve repair after debridement wounding. Sci. Rep. 2018.,NA,NA,NA,NA,NA,L1cam,FALSE
+ENSMUSG00000039542,Ncam1,CAM (L1/NCAM family),Adhesion molecule,Corneal Epithelial Cells Function as Surrogate Schwann Cells for their Sensory Nerves. Glia 2017 (PMC5395310).,NA,NA,NA,NA,NA,Ncam1,FALSE
+ENSMUSG00000020598,Nrcam,CAM (L1/NCAM family),Adhesion molecule,"Demyanenko, G.P. et al. NrCAM Promotes Topographic Retinocollicular Mapping. PMC3759449.",NA,NA,NA,NA,NA,Nrcam,FALSE
+ENSMUSG00000061353,Cxcl12,Chemokine guidance,Ligand,Wikipedia: Stromal cell-derived factor 1,NA,NA,NA,NA,NA,Cxcl12,FALSE
+ENSMUSG00000045382,Cxcr4,Chemokine guidance,Receptor,PMC: Loss of CXCL12/CXCR4 signalling impacts cardiovascular development (Rada-Iglesias lab / cardiovascular study),NA,NA,NA,NA,NA,Cxcr4,FALSE
+ENSMUSG00000027954,Efna1,Ephrin/Eph,Ligand,"Egea, J.; Klein, R. Trends Cell Biol. 2007, 17, 230-238.",NA,NA,NA,NA,NA,Efna1,FALSE
+ENSMUSG00000003070,Efna2,Ephrin/Eph,Ligand,"Egea, J.; Klein, R. Trends Cell Biol. 2007.",NA,NA,NA,NA,NA,Efna2,FALSE
+ENSMUSG00000028039,Efna3,Ephrin/Eph,Ligand,Roles of Eph/ephrin bidirectional signaling in CNS injury and recovery. Exp. Ther. Med. 2018.,NA,NA,NA,NA,NA,Efna3,FALSE
+ENSMUSG00000028040,Efna4,Ephrin/Eph,Ligand,"Egea, J.; Klein, R. Trends Cell Biol. 2007.",NA,NA,NA,NA,NA,Efna4,FALSE
+ENSMUSG00000048915,Efna5,Ephrin/Eph,Ligand,"Jayasena, C.S. et al. Neuroscience 2005, 135, 97-109.",NA,NA,NA,NA,NA,Efna5,FALSE
+ENSMUSG00000031217,Efnb1,Ephrin/Eph,Ligand,Proangiogenic Role of ephrinB1/EphB1 in Basic Fibroblast Growth Factor-Induced Corneal Angiogenesis. PMC1851865.,EFNB1,ENSG00000090776,Corneal epithelium,Mouse cornea; abundant expression in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Efnb1,TRUE
+ENSMUSG00000001300,Efnb2,Ephrin/Eph,Ligand,Eph-ephrin signaling couples endothelial cell sorting and arterial specification. Nat. Commun. 2024.,EFNB2,ENSG00000133250,Corneal epithelium,Mouse cornea; abundant expression in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Efnb2,TRUE
+ENSMUSG00000003934,Efnb3,Ephrin/Eph,Ligand,"Egea, J.; Klein, R. Cell 2008, 133, 38-51.",NA,NA,NA,NA,NA,Efnb3,FALSE
+ENSMUSG00000029859,Epha1,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPH receptor A1,NA,NA,NA,NA,NA,Epha1,FALSE
+ENSMUSG00000006445,Epha2,Ephrin/Eph,Receptor,EphA2/Ephrin-A1 Signaling Complexes Restrict Corneal Epithelial Cell Migration. IOVS 2012.,NA,NA,NA,NA,NA,Epha2,FALSE
+ENSMUSG00000052504,Epha3,Ephrin/Eph,Receptor,"Jayasena, C.S. et al. Neuroscience 2005; Kaczmarek, R. et al. Int. J. Mol. Sci. 2021.",NA,NA,NA,NA,NA,Epha3,FALSE
+ENSMUSG00000026235,Epha4,Ephrin/Eph,Receptor,"Egea, J.; Klein, R. Cell 2008, 133, 38-51.",NA,NA,NA,NA,NA,Epha4,FALSE
+ENSMUSG00000029245,Epha5,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPH receptor A5,NA,NA,NA,NA,NA,Epha5,FALSE
+ENSMUSG00000055540,Epha6,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPHA6,NA,NA,NA,NA,NA,Epha6,FALSE
+ENSMUSG00000028289,Epha7,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPHA7,NA,NA,NA,NA,NA,Epha7,FALSE
+ENSMUSG00000028661,Epha8,Ephrin/Eph,Receptor (tyrosine kinase),Wikipedia: EPHA8,NA,NA,NA,NA,NA,Epha8,FALSE
+ENSMUSG00000032537,Ephb1,Ephrin/Eph,Receptor,The Role of Eph Receptors and Ephrins in Corneal Physiology and Diseases. IJMS 2021; Proangiogenic Role of ephrinB1/EphB1... PMC1851865.,NA,NA,NA,NA,NA,Ephb1,FALSE
+ENSMUSG00000028664,Ephb2,Ephrin/Eph,Receptor,Roles of Eph/ephrin bidirectional signaling in central nervous system injury and recovery. 2018.,EPHB2,ENSG00000133216,Corneal epithelium,Receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Ephb2,TRUE
+ENSMUSG00000005958,Ephb3,Ephrin/Eph,Receptor,Roles of Eph/ephrin bidirectional signaling in central nervous system injury and recovery. 2018.,NA,NA,NA,NA,NA,Ephb3,FALSE
+ENSMUSG00000029710,Ephb4,Ephrin/Eph,Receptor,Evaluation of Eph receptor and ephrin expression within the human cornea and limbus. Exp. Eye Res. 2013.,EPHB4,ENSG00000198793,Corneal epithelium,Receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Ephb4,TRUE
+ENSMUSG00000029869,Ephb6,Ephrin/Eph,Receptor (kinase-dead pseudo-tyrosine kinase),Wikipedia: EPHB6,NA,NA,NA,NA,NA,Ephb6,FALSE
+ENSMUSG00000013033,Adgrl1,FLRT/Latrophilin,Adhesion molecule,Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016.,NA,NA,NA,NA,NA,Adgrl1,FALSE
+ENSMUSG00000028184,Adgrl2,FLRT/Latrophilin,Adhesion molecule,Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016.,NA,NA,NA,NA,NA,Adgrl2,FALSE
+ENSMUSG00000037605,Adgrl3,FLRT/Latrophilin,Adhesion molecule,"Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016, 7, 11184.",NA,NA,NA,NA,NA,Adgrl3,FALSE
+ENSMUSG00000022687,Boc,Hedgehog,Receptor,"Okada, A. et al. Nature 2006, 444, 369-373.",NA,NA,NA,NA,NA,Boc,FALSE
+ENSMUSG00000052957,Gas1,Hedgehog,Co-receptor,Gas1 is a receptor for sonic hedgehog to repel enteric axons. PNAS 2015.,NA,NA,NA,NA,NA,Gas1,FALSE
+ENSMUSG00000060534,Dcc,Netrin,Receptor,"Finci, L. et al. Prog. Biophys. Mol. Biol. 2015, 118, 153-160.",DCC,ENSG00000187323,Corneal epithelium,Netrin receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Dcc,TRUE
+ENSMUSG00000050272,Dscam,Netrin,Co-receptor,DSCAM promotes self-avoidance in the developing mouse retina. PNAS 2018.,NA,NA,NA,NA,NA,Dscam,FALSE
+ENSMUSG00000032340,Neo1,Netrin,Receptor,Role of Netrin-1 Signaling in Nerve Regeneration. (review).,NEO1,ENSG00000067182,Corneal epithelium,Netrin receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Neo1,TRUE
+ENSMUSG00000020902,Ntn1,Netrin,Ligand,"Boyer, N.P.; Gupton, S.L. Revisiting Netrin-1. Front. Cell Neurosci. 2018, 12, 221.",NTN1,ENSG00000065361,Corneal epithelium,Mouse cornea; abundant expression in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Ntn1,TRUE
+ENSMUSG00000117406,Ntn3,Netrin,Ligand,Kappler J. et al. Eur J Neurosci. 2000;12(2):491-501 (Netrin family characterization),NA,NA,NA,NA,NA,Ntn3,FALSE
+ENSMUSG00000020019,Ntn4,Netrin,Ligand,"Xiao, C. et al. Netrin-4 Modulates Corneal Wound Healing. FASEB Bioadv. 2025, 7, e70021.",NTN4,ENSG00000111665,Corneal epithelium,Mouse cornea; abundant expression in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167); Xiao et al., FASEB BioAdvances 2025",Ntn4,TRUE
+ENSMUSG00000070564,Ntn5,Netrin,Ligand,"Wikipedia: NTN5 (Netrin-5), summarizing primary literature on neurogenesis and migration roles",NA,NA,NA,NA,NA,Ntn5,FALSE
+ENSMUSG00000059857,Ntng1,Netrin,GPI-anchored ligand,GeneCards: NTNG1; Nakashiba T. et al. J Neurosci. 2000 (Netrin-G1 characterization),NA,NA,NA,NA,NA,Ntng1,FALSE
+ENSMUSG00000035513,Ntng2,Netrin,GPI-anchored ligand,Wikipedia: Netrin G2,NA,NA,NA,NA,NA,Ntng2,FALSE
+ENSMUSG00000025876,Unc5a,Netrin,Receptor,UNC5C: Novel Gene Associated with Psychiatric Disorders. 2024.,UNC5A,ENSG00000029725,Corneal epithelium,Netrin receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Unc5a,TRUE
+ENSMUSG00000020099,Unc5b,Netrin,Receptor,Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016.,NA,NA,NA,NA,NA,Unc5b,FALSE
+ENSMUSG00000059921,Unc5c,Netrin,Receptor,UNC5C: Novel Gene Associated with Psychiatric Disorders. 2024.,NA,NA,NA,NA,NA,Unc5c,FALSE
+ENSMUSG00000063626,Unc5d,Netrin,Receptor,"Super-complexes of adhesion GPCRs and neural guidance receptors. Nat. Commun. 2016, 7, 11184.",NA,NA,NA,NA,NA,Unc5d,FALSE
+ENSMUSG00000028519,Dab1,Other,Adaptor,The ApoE receptors Vldlr and Apoer2 in central nervous system function. J. Lipid Res.,NA,NA,NA,NA,NA,Dab1,FALSE
+ENSMUSG00000047787,Flrt1,Other,Adhesion molecule,Structural Basis of Latrophilin-FLRT-UNC5 Interaction in Cell Adhesion. Structure 2015.,NA,NA,NA,NA,NA,Flrt1,FALSE
+ENSMUSG00000047414,Flrt2,Other,Adhesion molecule,Expression of FLRT2 in Postnatal Central Nervous System Development and After Spinal Cord Injury. PMC8569257.,NA,NA,NA,NA,NA,Flrt2,FALSE
+ENSMUSG00000051379,Flrt3,Other,Adhesion molecule,Structural Basis of Latrophilin-FLRT-UNC5 Interaction in Cell Adhesion. Structure 2015.,NA,NA,NA,NA,NA,Flrt3,FALSE
+ENSMUSG00000042453,Reln,Other,Ligand,Reelin expression is upregulated following ocular tissue injury. Mayo Clinic / Univ. Illinois Chicago study.,NA,NA,NA,NA,NA,Reln,FALSE
+ENSMUSG00000002633,Shh,Other,Ligand,Sonic hedgehog expression and role in healing corneal epithelium. IOVS 2004.,NA,NA,NA,NA,NA,Shh,FALSE
+ENSMUSG00000028613,Lrp8,Reelin,Receptor,ApoER2 and VLDLr Are Required for Mediating Reelin Signalling Pathway. PLOS ONE 2013.,NA,NA,NA,NA,NA,Lrp8,FALSE
+ENSMUSG00000024924,Vldlr,Reelin,Receptor,ApoER2 and VLDLr Are Required for Mediating Reelin Signalling Pathway. PLOS ONE 2013.,NA,NA,NA,NA,NA,Vldlr,FALSE
+ENSMUSG00000025810,Nrp1,Semaphorin,Co-receptor,Neuropilins lock secreted semaphorins onto plexins in a ternary signaling complex.,NRP1,ENSG00000099250,Corneal epithelium,Receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Nrp1,TRUE
+ENSMUSG00000025969,Nrp2,Semaphorin,Co-receptor,Neuropilins lock secreted semaphorins onto plexins in a ternary signaling complex.,NRP2,ENSG00000145247,Corneal epithelium,Receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Nrp2,TRUE
+ENSMUSG00000030084,Plxna1,Semaphorin,Receptor,A putative structural mechanism underlying RND1/RhoD in plexin regulation. 2021.,PLXNA1,ENSG00000114554,Corneal epithelium,Receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Plxna1,TRUE
+ENSMUSG00000026640,Plxna2,Semaphorin,Receptor,Architecture of the Sema3A/PlexinA4/Neuropilin tripartite complex. Nat. Commun. 2021.,NA,NA,NA,NA,NA,Plxna2,FALSE
+ENSMUSG00000031398,Plxna3,Semaphorin,Receptor,A putative structural mechanism underlying RND1/RhoD in plexin regulation. 2021.,PLXNA3,ENSG00000130827,Corneal epithelium,Receptor expressed in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Plxna3,TRUE
+ENSMUSG00000029765,Plxna4,Semaphorin,Receptor,Architecture of the Sema3A/PlexinA4/Neuropilin tripartite complex. Nat. Commun. 2021.,NA,NA,NA,NA,NA,Plxna4,FALSE
+ENSMUSG00000053646,Plxnb1,Semaphorin,Receptor,Protection of Barrier Function in Cultured Human Corneal Epithelial Cells by Semaphorin 4D. 2023.,NA,NA,NA,NA,NA,Plxnb1,FALSE
+ENSMUSG00000036606,Plxnb2,Semaphorin,Receptor,Semaphorin 4C Plexin-B2 signaling in peripheral sensory neurons is pronociceptive. Nat. Commun. 2017.,NA,NA,NA,NA,NA,Plxnb2,FALSE
+ENSMUSG00000031385,Plxnb3,Semaphorin,Receptor,Semaphorin 4C Plexin-B2 signaling in peripheral sensory neurons is pronociceptive. Nat. Commun. 2017 (B-family plexin overview).,NA,NA,NA,NA,NA,Plxnb3,FALSE
+ENSMUSG00000074785,Plxnc1,Semaphorin,Receptor,ScienceDirect Topics: Semaphorin overview (plexin subfamily classification),NA,NA,NA,NA,NA,Plxnc1,FALSE
+ENSMUSG00000028883,Sema3a,Semaphorin,Other,Architecture of the Sema3A/PlexinA4/Neuropilin tripartite complex. Nat. Commun. 2021.,SEMA3A,ENSG00000075213,Corneal epithelium (basal/suprabasal epithelial cells),Mouse cornea; abundant expression in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Sema3a,TRUE
+ENSMUSG00000057969,Sema3b,Semaphorin,"Ligand (secreted, Class 3)",OMIM 601281 SEMA3B; Gong S. et al. (BAC transgenic CNS gene expression atlas),NA,NA,NA,NA,NA,Sema3b,FALSE
+ENSMUSG00000028780,Sema3c,Semaphorin,"Ligand (secreted, Class 3)",Wikipedia: SEMA3C,NA,NA,NA,NA,NA,Sema3c,FALSE
+ENSMUSG00000040254,Sema3d,Semaphorin,"Ligand (secreted, Class 3)",Rat Genome Database: Sema3d gene page,NA,NA,NA,NA,NA,Sema3d,FALSE
+ENSMUSG00000063531,Sema3e,Semaphorin,"Ligand (secreted, Class 3)",GeneCards: SEMA3E,NA,NA,NA,NA,NA,Sema3e,FALSE
+ENSMUSG00000034684,Sema3f,Semaphorin,Other,Semaphorin3A induces nerve regeneration in the adult cornea. PLOS ONE 2018 (class 3 semaphorin family survey).,SEMA3F,ENSG00000185499,Corneal epithelium,Mouse cornea; abundant expression in corneal epithelium,"Guaiquil et al., Exp Eye Res 2022 (PMCID: PMC9133167)",Sema3f,TRUE
+ENSMUSG00000021904,Sema3g,Semaphorin,"Ligand (secreted, Class 3)",GeneCards: SEMA3G,NA,NA,NA,NA,NA,Sema3g,FALSE
+ENSMUSG00000028064,Sema4a,Semaphorin,"Ligand (transmembrane, Class 4)",GeneCards: SEMA4A gene,NA,NA,NA,NA,NA,Sema4a,FALSE
+ENSMUSG00000030539,Sema4b,Semaphorin,"Ligand (transmembrane, Class 4)",Wikipedia: SEMA4B,NA,NA,NA,NA,NA,Sema4b,FALSE
+ENSMUSG00000026121,Sema4c,Semaphorin,"Ligand (transmembrane, Class 4)",GeneCards: SEMA4C,NA,NA,NA,NA,NA,Sema4c,FALSE
+ENSMUSG00000021451,Sema4d,Semaphorin,Other,Protection of Barrier Function in Cultured Human Corneal Epithelial Cells by Semaphorin 4D. 2023.,NA,NA,NA,NA,NA,Sema4d,FALSE
+ENSMUSG00000000627,Sema4f,Semaphorin,"Ligand (transmembrane, Class 4)",Wikipedia: SEMA4F,NA,NA,NA,NA,NA,Sema4f,FALSE
+ENSMUSG00000025207,Sema4g,Semaphorin,"Ligand (transmembrane, Class 4)",Wikipedia: SEMA4G,NA,NA,NA,NA,NA,Sema4g,FALSE
+ENSMUSG00000022231,Sema5a,Semaphorin,"Ligand (transmembrane, Class 5)",Ensembl/MGI: Sema5a gene page,NA,NA,NA,NA,NA,Sema5a,FALSE
+ENSMUSG00000052133,Sema5b,Semaphorin,"Ligand (transmembrane, Class 5)",Rat Genome Database: Sema5b gene page,NA,NA,NA,NA,NA,Sema5b,FALSE
+ENSMUSG00000019647,Sema6a,Semaphorin,Other,Neuropilins lock secreted semaphorins onto plexins in a ternary signaling complex.,NA,NA,NA,NA,NA,Sema6a,FALSE
+ENSMUSG00000001227,Sema6b,Semaphorin,"Ligand (transmembrane, Class 6)",GeneCards: SEMA6B,NA,NA,NA,NA,NA,Sema6b,FALSE
+ENSMUSG00000038777,Sema6c,Semaphorin,"Ligand (transmembrane, Class 6)",Frontiers in Molecular Neuroscience: Semaphorin Signaling in Vertebrate Neural Circuit Assembly,NA,NA,NA,NA,NA,Sema6c,FALSE
+ENSMUSG00000027200,Sema6d,Semaphorin,"Ligand (transmembrane, Class 6)",Frontiers in Molecular Neuroscience: Semaphorin Signaling in Vertebrate Neural Circuit Assembly,NA,NA,NA,NA,NA,Sema6d,FALSE
+ENSMUSG00000038264,Sema7a,Semaphorin,"Ligand (GPI-anchored, Class 7)",Frontiers in Physiology: Semaphorins and Their Receptors: From Axonal Guidance to Atherosclerosis,NA,NA,NA,NA,NA,Sema7a,FALSE
+ENSMUSG00000022883,Robo1,Slit,Receptor,The role of Slit-Robo signaling in the regulation of tissue barriers. Tissue Barriers 2017.,NA,NA,NA,NA,NA,Robo1,FALSE
+ENSMUSG00000052516,Robo2,Slit,Receptor,"Howard, L.J. et al. Genesis 2021.",NA,NA,NA,NA,NA,Robo2,FALSE
+ENSMUSG00000032128,Robo3,Slit,Receptor,The multifaceted roles of Slits and Robos in cortical circuits. Curr. Opin. Neurobiol. 2014.,NA,NA,NA,NA,NA,Robo3,FALSE
+ENSMUSG00000032125,Robo4,Slit,Receptor,The Role of SLIT3-ROBO4 Signaling in ER Stress-Induced Delayed Corneal Epithelial and Nerve Regeneration. IOVS 2024.,NA,NA,NA,NA,NA,Robo4,FALSE
+ENSMUSG00000025020,Slit1,Slit,Ligand,Beyond Axon Guidance: Roles of Slit-Robo Signaling in Neocortical Formation. Front. Cell Dev. Biol. 2020.,NA,NA,NA,NA,NA,Slit1,FALSE
+ENSMUSG00000031558,Slit2,Slit,Ligand,Protective effects of Slit2 on corneal epithelium and nerves in diabetic mice. CJEO 2022.,NA,NA,NA,NA,NA,Slit2,FALSE
+ENSMUSG00000056427,Slit3,Slit,Ligand,The Role of SLIT3-ROBO4 Signaling in ER Stress-Induced Delayed Corneal Epithelial and Nerve Regeneration. IOVS 2024.,NA,NA,NA,NA,NA,Slit3,FALSE
+ENSMUSG00000021464,Ror2,Wnt,Receptor,"Green, J.L. et al. Cold Spring Harb. Perspect. Biol. 2013; Identification of Wnt-5a Receptors... PMC11875028.",NA,NA,NA,NA,NA,Ror2,FALSE
+ENSMUSG00000032547,Ryk,Wnt,Co-receptor,"Green, J.L. et al. Cold Spring Harb. Perspect. Biol. 2013.",NA,NA,NA,NA,NA,Ryk,FALSE
+ENSMUSG00000021994,Wnt5a,Wnt,Ligand,Identification of Wnt-5a Receptors Important in Diabetic and Non-Diabetic Corneal Epithelial Wound Healing. 2025 (PMC11875028); Reversal of dual epigenetic repression of non-canonical Wnt-5a... 2023 (PMC10474199).,NA,NA,NA,NA,NA,Wnt5a,FALSE
