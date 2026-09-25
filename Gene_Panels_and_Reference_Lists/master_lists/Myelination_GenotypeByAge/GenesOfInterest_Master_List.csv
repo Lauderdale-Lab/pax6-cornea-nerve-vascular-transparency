@@ -1,0 +1,26 @@
+gene_id,symbol,category,subcategory,evidence_source,known_cornea_expressed
+ENSMUSG00000062312,Erbb2,Axon-Schwann signaling,Receptor,NA,FALSE
+ENSMUSG00000018166,Erbb3,Axon-Schwann signaling,Receptor,NA,FALSE
+ENSMUSG00000052957,Gas1,Axon-Schwann signaling,Hedgehog signaling,Martinelli & Fan 2007 Genes Dev (Gas1 is a Shh co-receptor); Hedgehog signaling promotes Schwann cell myelination (Sharghi-Namini et al. 2006 J Neurosci) -- also on axon-guidance panel (Hedgehog co-receptor),TRUE
+ENSMUSG00000062991,Nrg1,Axon-Schwann signaling,Ligand,NA,FALSE
+ENSMUSG00000036634,Mag,Myelin structural,Structural protein,GO,FALSE
+ENSMUSG00000041607,Mbp,Myelin structural,Structural protein,GO,FALSE
+ENSMUSG00000056569,Mpz,Myelin structural,Structural protein,GO,FALSE
+ENSMUSG00000018217,Pmp22,Myelin structural,Structural protein,GO,FALSE
+ENSMUSG00000053198,Prx,Myelin structural,Structural protein,MGI/Ensembl (verified via search; not in reference CSV),FALSE
+ENSMUSG00000037868,Egr2,Myelination TF,Transcription factor,Reactome,FALSE
+ENSMUSG00000090125,Pou3f1,Myelination TF,Transcription factor,MGI/Ensembl (verified via search; not in reference CSV),FALSE
+ENSMUSG00000033006,Sox10,Myelination TF,Transcription factor,Reactome,FALSE
+ENSMUSG00000021264,Yy1,Myelination TF,Transcription factor,MGI/Ensembl (verified via search; not in reference CSV),FALSE
+ENSMUSG00000026872,Zeb2,Myelination TF,Transcription factor,MGI/Ensembl (verified via search; not in reference CSV),FALSE
+ENSMUSG00000020644,Id2,Myelination inhibitor,Negative regulator,MGI/Ensembl (verified via search; not in reference CSV),FALSE
+ENSMUSG00000052684,Jun,Myelination inhibitor,Negative regulator,GO,FALSE
+ENSMUSG00000026923,Notch1,Myelination inhibitor,Negative regulator,NA,FALSE
+ENSMUSG00000021451,Sema4d,Myelination inhibitor,Negative regulator,"Moreau-Fauvarque et al. 2003 J Neurosci (Sema4D/CD100 expressed on oligodendrocytes, inhibits axonal growth after CNS lesion) -- also on axon-guidance and vascular/lymphatic panels",TRUE
+ENSMUSG00000074637,Sox2,Myelination inhibitor,Negative regulator,MGI/Ensembl (verified via search; not in reference CSV),FALSE
+ENSMUSG00000006782,Cnp,Schwann cell marker,Other,NA,FALSE
+ENSMUSG00000023000,Dhh,Schwann cell marker,Other,MGI/Ensembl (verified via search; not in reference CSV),FALSE
+ENSMUSG00000027375,Mal,Schwann cell marker,Other,GO,FALSE
+ENSMUSG00000043924,Ncmap,Schwann cell marker,Other,MGI/Ensembl (verified via search; not in reference CSV),FALSE
+ENSMUSG00000031775,Pllp,Schwann cell marker,Other,GO,FALSE
+ENSMUSG00000033208,S100b,Schwann cell marker,Other,MGI/Ensembl (verified via search; not in reference CSV),FALSE
