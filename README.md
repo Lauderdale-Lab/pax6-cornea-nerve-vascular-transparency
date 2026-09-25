@@ -48,19 +48,48 @@ flagged library.
 
 ## Running it
 
+1. Clone the repository.
+2. Download the study's count matrix and save it as
+   `RNAseq_Quantification_Matrices/Combined_2025_2026/gene_counts_featureCounts_all48.txt`
+   (see the README in that folder for the source and the MD5 checksum).
+3. In R, from the root of the clone:
+
 ```r
-setwd("<project root>")
+setwd("<path to the clone>")
 ## Optional: the cross-dataset check (09) runs only when both are set.
 ## Sys.setenv does not survive an R restart.
-Sys.setenv(PAX6_DUNCAN_COUNTS = "<path to GSE183742 count matrix>",
-           PAX6_DUNCAN_META   = "<path to GSE183742 sample metadata CSV>")
-source("run_all.R")
+Sys.setenv(PAX6_DUNCAN_COUNTS = "RNAseq_Quantification_Matrices/Duncan_GSE183742/gene_counts_featureCounts.txt",
+           PAX6_DUNCAN_META   = "Metadata_and_Sample_Guide/Duncan_GSE183742/GSE183742_sample_metadata.csv")
+source("scripts/run_all.R")
 ```
 
-The runner looks for the scripts in the working directory; if they are kept
-elsewhere (for example in `scripts/`), set `PAX6_SCRIPT_DIR` to that folder.
-Set `PAX6_PROJECT_ROOT` to the folder holding the data if it is not one of the
-defaults listed in `00_config.R`.
+The working directory is the project root: inputs are read from it and outputs
+written under it. The scripts are found in `scripts/` automatically; set
+`PAX6_SCRIPT_DIR` only if they are kept somewhere else, and
+`PAX6_PROJECT_ROOT` only if the data are not under the working directory.
+`run_all.R` sets `PAX6_SCRIPT_DIR` for the rest of the R session, so restart R
+before running a different copy of the pipeline.
+
+### Reproducing the published results
+
+A run from a clone should reproduce the published results exactly. Three
+checks confirm it:
+
+- **Inputs.** `RunProvenance.txt` records the MD5 of the count matrix and
+  metadata it read. Both should match
+  `docs/RunProvenance_v1.0.0_2026-09-24.txt`, the record of the run behind
+  the manuscript. That file also lists the R and package versions used.
+- **Panels.** The three curated panel master lists are committed in
+  `Gene_Panels_and_Reference_Lists/master_lists/`. `00b` rebuilds each panel
+  from its curated CSV and stops the run if the result differs from the
+  committed list by a single gene, for example because of a
+  different `org.Mm.eg.db` version.
+- **Derived files.** The run rewrites `scripts/PanelPrimaryAssignment.R` and
+  the three master lists. Afterwards, `git diff` should show no change except
+  the "Written" date line in `PanelPrimaryAssignment.R`.
+
+Numbers quoted in figure captions are regenerated in `Figure_CaptionNumbers.txt`
+on every run and can be compared with the manuscript directly.
 
 Scripts are numbered in execution order and share one R session by design:
 `05` needs transcriptome-wide expression status, `06` needs the shared-gene
@@ -106,7 +135,7 @@ analysis makes.
 ### Editing a curated panel
 
 `00b_panel_universes.R` rebuilds each panel from its curated CSV and compares
-it with the master list saved by the previous run. Any difference stops the
+it with the committed master list in `Gene_Panels_and_Reference_Lists/master_lists/`. Any difference stops the
 run, because every denominator in the paper depends on the panel sizes. That
 is the intended behaviour for an *unintended* change. For an intended edit,
 run once with the guard off, which rewrites the master list, then return to
@@ -114,14 +143,18 @@ strict mode:
 
 ```r
 Sys.setenv(PAX6_PANEL_STRICT = "FALSE")
-source("run_all.R")
+source("scripts/run_all.R")
 Sys.unsetenv("PAX6_PANEL_STRICT")
 ```
+
+The rewritten master lists are then committed with the curated CSV change.
 
 
 ## Outputs
 
-Written to `Paper_Exports/ThreeState_Release/`:
+Written to `results/` in the project root, or to `results/<name>/` when
+`PAX6_OUT_SUBDIR` is set to `<name>` (useful for keeping a sensitivity run
+apart from the main one):
 
 | File | Contents |
 |---|---|
@@ -199,7 +232,7 @@ figures. To produce it as a supplementary figure:
 
 ```r
 Sys.setenv(PAX6_FIG7_CONFOUNDED = "TRUE")
-source("08_figures.R")
+source("scripts/08_figures.R")
 Sys.unsetenv("PAX6_FIG7_CONFOUNDED")
 ```
 
@@ -229,6 +262,22 @@ developmental outputs so the de-duplication can be reproduced downstream.
 **Version 1.0.0 (2026-09-24) is the first public release.** The entries below
 record changes made during development, before release, so that any output
 produced earlier can be matched to the code that produced it.
+
+**2026-09-25 — Runs from a clone; outputs moved to `results/`.** `run_all.R`
+and `00_config.R` now find the scripts in `scripts/` when run from the
+repository root, and the project root is the working directory unless
+`PAX6_PROJECT_ROOT` is set (the machine-specific fallback paths were removed).
+Outputs are written to `results/` (were
+`Pax6_dtu_results/Module3_Standalone_Combined_2025_2026/Paper_Exports/ThreeState_Release/`),
+and `PAX6_OUT_SUBDIR` now names a folder under `results/`. The three panel
+master lists moved to `Gene_Panels_and_Reference_Lists/master_lists/` and are
+renamed `AxonGuidance_Master_List.csv`, `Myelination_Master_List.csv` and
+`VascularLymphatic_Master_List.csv` (were `GenesOfInterest_Master_List.csv`
+in one folder per panel); they are committed, so a fresh clone is checked
+against the published panels. In the code, `PANEL_DIRS` is now
+`PANEL_MASTER_FILES`.
+Two error messages and two comments naming renamed scripts were corrected. No
+analysis code or number changed.
 
 **2026-09-24 — Off-target tissue screen added to the pipeline; sample PCA.**
 `01c_contamination_indices.R` is new and required. It reproduces
@@ -289,12 +338,16 @@ if it is absent; `limma` (installed with `edgeR`) for the batch-removed view of
 the sample PCA, which is likewise skipped without it. Exact versions used for the published results are recorded in
 `RunProvenance.txt`.
 
-Input data are not included in this repository; sequencing data are deposited
-at `<ACCESSION>`. The independent dataset used by `09` is GEO GSE183742.
+The study's count matrix is not included in this repository; sequencing data
+and the count matrix are deposited at GEO `<ACCESSION>`. The count matrices
+were produced from the raw reads by the pipeline in
+[pax6-cornea-trigeminal-rnaseq-upstream](https://github.com/Lauderdale-Lab/pax6-cornea-trigeminal-rnaseq-upstream).
+The independent dataset used by `09` is GEO GSE183742; its count matrix,
+produced by the same pipeline, is included here.
 
 ## Methods references
 
-`REFERENCES.md` lists every statistical method used and what it is cited for.
+`docs/REFERENCES.md` lists every statistical method used and what it is cited for.
 Each script carries a numbered `STATISTICAL BASIS` block in its header with
 inline markers at the implementing line.
 
