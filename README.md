@@ -133,7 +133,12 @@ Benjamini–Hochberg correction within primary panel and contrast. It departs
 from the corneal models in two ways the design forces: no batch term (all
 trigeminal libraries were sequenced in one batch) and, by default, no
 male-fraction covariate (`PAX6_TRIGEMINAL_SEX_COVARIATE=TRUE` adds it). Each
-library's male fraction is written to the sample table. Because the headline
+library's male fraction is written to the sample table. Because Mbp and Mag
+are made by central oligodendrocytes as well as Schwann cells, the step also
+reports each library's expression of central markers (Mog, Mobp, Olig2, Gfap)
+and myelinating Schwann-cell markers (Prx, Mpz, Pmp22, Egr2), so carry-over of
+nerve root or brainstem at dissection can be read directly; the list is
+`TRIGEMINAL_TISSUE_MARKERS` in `00_config.R`. Because the headline
 trigeminal result is a negative, the wild-type age comparison is fitted on the
 same libraries as a positive control.
 
@@ -189,7 +194,7 @@ apart from the main one):
 | `Developmental_*.csv` | trajectories and status crossings |
 | `Concordance/` | the concordance check, see below |
 | `CrossDataset/` | the calls against GSE183742, the dissection-margin check, and GSE183742's libraries judged by the Supplementary Table 6 rule (only when `09` runs) |
-| `Trigeminal/` | the trigeminal analysis: sample table with male fraction, per-gene panel results, outcomes by panel and contrast, genome-wide counts including the positive control, and `Trigeminal_Summary.txt` with the numbers quoted in the manuscript |
+| `Trigeminal/` | the trigeminal analysis: sample table with male fraction, central-nervous-system and Schwann-cell marker CPM per library (`Trigeminal_TissueMarkers.csv`), per-gene panel results, outcomes by panel and contrast, genome-wide counts including the positive control, and `Trigeminal_Summary.txt` with the numbers quoted in the manuscript |
 | `RunProvenance.txt` | inputs, parameters, timings, session info |
 
 Figures, from `08_figures.R`:
