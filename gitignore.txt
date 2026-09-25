@@ -1,7 +1,0 @@
-Pax6_dtu_results/
-RNAseq_Quantification_Matrices/**/*.txt
-!RNAseq_Quantification_Matrices/Duncan_GSE183742/gene_counts_featureCounts.txt
-.RData
-.Rhistory
-.Rproj.user/
-.DS_Store
