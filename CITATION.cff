@@ -40,7 +40,8 @@ keywords:
   - corneal vascularization
   - corneal transparency
 license: MIT
-version: 1.0.0
+version: 1.0.1
+doi: 10.5281/zenodo.22965379
 date-released: '2026-09-25'
 
 # Uncomment and complete once the manuscript is published, so that

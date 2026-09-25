@@ -6,7 +6,7 @@ R code for the curated-panel RNA-seq analysis reported in:
 > Sneha K. Mohan, James D. Lauderdale
 > Department of Cellular Biology, University of Georgia, Athens, GA 30602, USA
 
-Repository: <https://github.com/Lauderdale-Lab/pax6-cornea-nerve-vascular-transparency> · Archived release: `<ZENODO_DOI>` · Contact: James D. Lauderdale, <jdlauder@uga.edu>
+Repository: <https://github.com/Lauderdale-Lab/pax6-cornea-nerve-vascular-transparency> · Archived release: [10.5281/zenodo.22965379](https://doi.org/10.5281/zenodo.22965379) · Contact: James D. Lauderdale, <jdlauder@uga.edu>
 
 Licensed under the MIT License — see [`LICENSE`](LICENSE).
 
@@ -285,6 +285,11 @@ developmental outputs so the de-duplication can be reproduced downstream.
 record changes made during development, before release, so that any output
 produced earlier can be matched to the code that produced it.
 
+**Version 1.0.1 (2026-09-25).** Records the Zenodo DOI
+(10.5281/zenodo.22965379, which resolves to the latest version) in the README
+and every script header, and the GEO accession of the study's data
+(GSE348661). No code or result changed from 1.0.0.
+
 **2026-09-25 — Trigeminal analysis added to the pipeline.**
 `10_trigeminal.R` is new and required. It replaces a standalone script
 (`Module5_Trigeminal_PanelFocused_v3.R`) that was run on 2026-07-29, before
@@ -373,7 +378,7 @@ published run used 1.18.6.1). Exact versions used for the published results
 are recorded in `docs/RunProvenance_v1.0.0_2026-09-25.txt`.
 
 The study's count matrix is not included in this repository; sequencing data
-and the count matrix are deposited at GEO `<ACCESSION>`. The count matrices
+and the count matrix are deposited at GEO [GSE348661](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE348661). The count matrices
 were produced from the raw reads by the pipeline in
 [pax6-cornea-trigeminal-rnaseq-upstream](https://github.com/Lauderdale-Lab/pax6-cornea-trigeminal-rnaseq-upstream).
 The independent dataset used by `09` is GEO GSE183742; its count matrix,
