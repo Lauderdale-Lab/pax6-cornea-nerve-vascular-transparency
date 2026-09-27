@@ -127,13 +127,18 @@ match_sample_id <- function(x, valid_ids) {
   if (length(hits) == 1) hits else x
 }
 
-annotation_cols <- c("Geneid", "Chr", "Start", "End", "Strand", "Length")
+## Two layouts are accepted: raw featureCounts output (Geneid plus five
+## coordinate columns, BAM paths as sample names) and the tidy matrix deposited
+## at GEO (gene_id, then one column per sample ID). The counts are the same.
+annotation_cols <- c("Geneid", "gene_id", "Chr", "Start", "End", "Strand", "Length")
 header <- data.table::fread(FILE_COUNTS, nrows = 0, header = TRUE, sep = "\t")
+id_col <- intersect(c("Geneid", "gene_id"), names(header))[1]
+if (is.na(id_col)) stop("Count matrix has neither a Geneid nor a gene_id column: ", FILE_COUNTS)
 sample_cols <- setdiff(names(header), annotation_cols)
 
 counts_dt <- data.table::fread(FILE_COUNTS, sep = "\t", comment.char = "#",
-                               select = c("Geneid", sample_cols))
-data.table::setnames(counts_dt, "Geneid", "gene_id")
+                               select = c(id_col, sample_cols))
+data.table::setnames(counts_dt, id_col, "gene_id")
 data.table::setnames(counts_dt, sample_cols, strip_alignment_suffix(sample_cols))
 counts_dt[, gene_id := base::sub("\\.[0-9]+$", "", gene_id)]
 counts_dt <- unique(counts_dt, by = "gene_id")

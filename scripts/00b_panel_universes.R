@@ -114,9 +114,14 @@ V_EVI <- c("evidence_source", "evidence", "source", "publication_source")
 ## ---------------------------------------------------------------------------
 
 if (!file.exists(FILE_COUNTS)) stop("Count matrix not found: ", FILE_COUNTS)
+## The gene-ID column is `Geneid` in featureCounts output and `gene_id` in the
+## tidy matrix deposited at GEO; either is accepted.
+count_id_col <- intersect(c("Geneid", "gene_id"),
+                          names(data.table::fread(FILE_COUNTS, nrows = 0, header = TRUE, sep = "\t")))[1]
+if (is.na(count_id_col)) stop("Count matrix has neither a Geneid nor a gene_id column: ", FILE_COUNTS)
 gene_ids_all <- unique(strip_version(
   data.table::fread(FILE_COUNTS, sep = "\t", comment.char = "#",
-                    select = "Geneid")[["Geneid"]]))
+                    select = count_id_col)[[count_id_col]]))
 say("Counts matrix gene universe: ", length(gene_ids_all), " genes")
 
 if (nzchar(GTF_FILE) && file.exists(GTF_FILE)) {
