@@ -246,7 +246,7 @@ x_gene <- sub("\\.[0-9]+$", "", x_dm$Geneid)
 x_dm <- as.matrix(x_dm[, setdiff(names(x_dm),
           c("Geneid", "Chr", "Start", "End", "Strand", "Length")), drop = FALSE])
 rownames(x_dm) <- x_gene
-colnames(x_dm) <- sub("_hisat2\\.sorted\\.bam$", "", basename(colnames(x_dm)))
+colnames(x_dm) <- sub("(_hisat2)?(\\.sorted)?\\.bam$", "", basename(colnames(x_dm)))
 x_dm <- x_dm[!duplicated(rownames(x_dm)), , drop = FALSE]
 
 ## Library sizes over the WHOLE matrix, taken before any gene subsetting below.
