@@ -49,9 +49,11 @@ flagged library.
 ## Running it
 
 1. Clone the repository.
-2. Download the study's count matrix and save it as
+2. Download the study's count matrix from GEO GSE348661, decompress it and
+   save it as
    `RNAseq_Quantification_Matrices/Combined_2025_2026/gene_counts_featureCounts_all48.txt`
-   (see the README in that folder for the source and the MD5 checksum).
+   (the README in that folder gives the file name, the one-line command and
+   the MD5 checksums).
 3. In R, from the root of the clone:
 
 ```r
@@ -77,8 +79,9 @@ checks confirm it:
 
 - **Inputs.** `RunProvenance.txt` records the MD5 of the count matrix and
   metadata it read. Both should match
-  `docs/RunProvenance_v1.0.0_2026-09-25.txt`, the record of the run behind
-  the manuscript. That file also lists the R and package versions used.
+  `docs/RunProvenance_v1.0.3_2026-09-27.txt`, the record of the run behind
+  the manuscript, made on the matrix as deposited at GEO. That file also lists
+  the R and package versions used.
 - **Panels.** The three curated panel master lists are committed in
   `Gene_Panels_and_Reference_Lists/master_lists/`. `00b` rebuilds each panel
   from its curated CSV and stops the run if the result differs from the
@@ -290,6 +293,24 @@ produced earlier can be matched to the code that produced it.
 and every script header, and the GEO accession of the study's data
 (GSE348661). No code or result changed from 1.0.0.
 
+**Version 1.0.2 (2026-09-27).** `09_cross_dataset_replication.R` accepts
+plain `.bam` column names, as written by the current upstream pipeline, as
+well as the earlier `_hisat2.sorted.bam` form. No statistical change.
+
+**Version 1.0.3 (2026-09-27).** The count matrix is now the one produced from
+the raw reads by run `reprocess_2026-09` of the upstream pipeline (commit
+9182fd5) and deposited at GEO GSE348661. It differs from the earlier matrix by
+at most 31 fragments per library. Every reported call, count and caption
+number is unchanged; P values and fold changes differ at the third significant
+figure or beyond. The one flag that moves is library QC for trigeminal library
+B_TU2 (detection z-score −2.96, against −3.17 before; not excluded either way). `00b` and `01_load.R` now read the tidy GEO layout (`gene_id`
+then one column per sample) as well as raw featureCounts output. The README in
+`RNAseq_Quantification_Matrices/Combined_2025_2026/` gives the GEO file and
+its checksums. `docs/` holds the provenance records of the runs on the
+reprocessed matrix: `RunProvenance_v1.0.2_2026-09-27.txt` (raw featureCounts
+layout) and `RunProvenance_v1.0.3_2026-09-27.txt` (the GEO file, with this
+release).
+
 **2026-09-25 — Trigeminal analysis added to the pipeline.**
 `10_trigeminal.R` is new and required. It replaces a standalone script
 (`Module5_Trigeminal_PanelFocused_v3.R`) that was run on 2026-07-29, before
@@ -375,7 +396,7 @@ if it is absent; `limma` (installed with `edgeR`) for the batch-removed view of
 the sample PCA, which is likewise skipped without it. `data.table` must be
 recent enough that `fread()` accepts `comment.char` (1.14.10 does not; the
 published run used 1.18.6.1). Exact versions used for the published results
-are recorded in `docs/RunProvenance_v1.0.0_2026-09-25.txt`.
+are recorded in `docs/RunProvenance_v1.0.3_2026-09-27.txt`.
 
 The study's count matrix is not included in this repository; sequencing data
 and the count matrix are deposited at GEO [GSE348661](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE348661). The count matrices
