@@ -26,3 +26,6 @@ RNAseq_Quantification_Matrices/**/*.txt
 
 # macOS
 .DS_Store
+
+# Assembled supplementary tables (rebuild with supplement/assemble_supplement.py)
+supplement/_assembled/

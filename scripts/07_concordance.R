@@ -1055,7 +1055,7 @@ c9_p_pca <- ggplot2::ggplot(c9_pca_df, ggplot2::aes(PC1, PC2, colour = group, sh
                               name = "Batch") +
   ggplot2::labs(title = "Sample PCA, corneal libraries",
                 subtitle = paste0("Top ", PCA_NTOP, " most variable genes, variance-stabilised counts. ",
-                                  "Labelled: libraries with an off-target flag (Supp. Table 6).\n",
+                                  "Labelled: libraries with an off-target flag (Supplementary Table 13).\n",
                                   "Right panel: batch removed for display only; no result is computed from it.")) +
   c9_theme +
   ggplot2::theme(legend.position = "right")
@@ -1082,7 +1082,7 @@ c9_say("  direction under the ungated model.")
 c9_dom_all <- c9_on_flagged %>% dplyr::filter(dominated)
 c9_say(sprintf("  In %d of these %d status calls, a single library carrying an off-target",
                nrow(c9_dom_all), nrow(c9_calls_high)))
-c9_say(sprintf("  flag (Supp. Table 6) supplied more than half the pooled count on the higher%s",
+c9_say(sprintf("  flag (Supplementary Table 13) supplied more than half the pooled count on the higher%s",
                if (nrow(c9_dom_all)) " side:" else " side."))
 if (nrow(c9_dom_all)) {
   for (lib in unique(c9_dom_all$top_library)) {

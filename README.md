@@ -42,7 +42,7 @@ rather than removed. See *Concordance* below.
 
 Every library is also screened for tissue other than central cornea carried
 at dissection (adherent iris, angle, lens, retina) and for its share of stroma
-and epithelium (`01c`, Supplementary Table 6). The screen excludes nothing; it
+and epithelium (`01c`, Supplementary Table 13). The screen excludes nothing; it
 is reported, and `07` lists any status call whose reads come mostly from a
 flagged library.
 
@@ -110,7 +110,7 @@ the input files, every resolved parameter, the step timings and the full
 | `00b_panel_universes.R` | builds the three curated panels |
 | `01_load.R` | metadata, counts, pool sex composition, panels |
 | `01b_qc_library_depth.R` | library complexity at matched sequencing depth |
-| `01c_contamination_indices.R` | off-target tissue and stromal/epithelial share per library (Supplementary Table 6); defines the rule `09` applies to GSE183742 |
+| `01c_contamination_indices.R` | off-target tissue and stromal/epithelial share per library (Supplementary Table 13); defines the rule `09` applies to GSE183742 |
 | `02_shared_gene_assignment.R` | primary panel for genes on more than one panel; writes `PanelPrimaryAssignment.R` |
 | `03_expression_status.R` | expression status and assessability |
 | `04_differential.R` | differential expression, equivalence, omnibus, interactions |
@@ -196,7 +196,7 @@ apart from the main one):
 | `ProgramLevel.csv` | panel-level, abundance-matched |
 | `Developmental_*.csv` | trajectories and status crossings |
 | `Concordance/` | the concordance check, see below |
-| `CrossDataset/` | the calls against GSE183742, the dissection-margin check, and GSE183742's libraries judged by the Supplementary Table 6 rule (only when `09` runs) |
+| `CrossDataset/` | the calls against GSE183742, the dissection-margin check, and GSE183742's libraries judged by the Supplementary Table 13 rule (only when `09` runs) |
 | `Trigeminal/` | the trigeminal analysis: sample table with male fraction, central-nervous-system and Schwann-cell marker CPM per library (`Trigeminal_TissueMarkers.csv`), per-gene panel results, outcomes by panel and contrast, genome-wide counts including the positive control, and `Trigeminal_Summary.txt` with the numbers quoted in the manuscript |
 | `RunProvenance.txt` | inputs, parameters, timings, session info |
 
@@ -339,7 +339,7 @@ analysis code or number changed.
 
 **2026-09-24 — Off-target tissue screen added to the pipeline; sample PCA.**
 `01c_contamination_indices.R` is new and required. It reproduces
-Supplementary Table 6 inside the pipeline: per-library indices for pigmented
+Supplementary Table 13 (numbered 6 when this entry was written) inside the pipeline: per-library indices for pigmented
 tissue, retina, lens, angle and conjunctiva, and stromal and epithelial share,
 each judged against the same-age corneal libraries excluding opaque mutants and
 the library itself. Stroma-poor is now defined as both stromal controls (Kera,
@@ -349,7 +349,7 @@ libraries. The marker list and every threshold moved to `00_config.R` and are
 shared with the dissection-margin check in `09`, whose own list had drifted: it
 no longer counts *Pmel* (expressed in every cornea) or *Chi3l1* (induced with
 inflammation in opaque cornea), and its lens and retina sets are now `01c`'s.
-`09` also judges each GSE183742 library by the Supplementary Table 6 rule.
+`09` also judges each GSE183742 library by the Supplementary Table 13 rule (numbered 6 when this entry was written).
 `07` gains a list of status calls whose higher side is more than half one
 flagged library, and a descriptive genome-wide sample PCA. The confounded
 supplement from `08` is now named after its main figure (`Figure8_Confounded`,
@@ -418,3 +418,18 @@ See `CITATION.cff`, or use the "Cite this repository" button on GitHub.
 ## Licence
 
 MIT — see [`LICENSE`](LICENSE).
+
+## Supplementary tables
+
+`supplement/SupplementaryTable_Map.csv` is the single record of which pipeline
+output forms which sheet of which Supplementary Table (the `include` column turns
+a sheet off; `N` rows are outputs deliberately left out). To rebuild the tables
+from a run folder:
+
+```
+python3 supplement/assemble_supplement.py --map supplement/SupplementaryTable_Map.csv \
+    --run results/<run> --repo . --upstream <upstream-repo> --handcurated <dir> --out <out>
+python3 supplement/check_supplement.py --out <out> --run results/<run> --map supplement/SupplementaryTable_Map.csv
+```
+The check script recomputes the numbers quoted in the Supplementary Tables text and
+fails if any output of the run is not named in the map. Values are never edited.

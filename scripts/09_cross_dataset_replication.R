@@ -82,7 +82,7 @@ suppressPackageStartupMessages({
 if (!exists("OUT_ROOT")) stop("Source 00_config.R first.")
 if (!exists("count_mat")) stop("Source 01_load.R first.")
 ## The margin check uses the marker identifiers and the per-library rule that
-## 01c defines, so that GSE183742 is judged on exactly the terms of Supp. Table 6.
+## 01c defines, so that GSE183742 is judged on exactly the terms of Supplementary Table 13.
 if (!exists("ot_marker_ids") || !exists("ot_flag_library"))
   stop("Source 01c_contamination_indices.R first.")
 
@@ -838,7 +838,7 @@ if (nrow(X_MARGIN_MARKERS)) {
 
   write.csv(x_margin, file.path(X_OUT, "CrossDataset_DissectionMargin.csv"), row.names = FALSE)
 
-  ## PER LIBRARY, ON THE TERMS OF SUPP. TABLE 6. The block above compares
+  ## PER LIBRARY, ON THE TERMS OF SUPPLEMENTARY TABLE 13. The block above compares
   ## pooled groups; this one judges each GSE183742 library by the rule 01c
   ## applies to ours, against the reference 01c uses for an adult cornea (this
   ## study's adult wild type and transparent mutant). The same flags, the same
@@ -853,7 +853,7 @@ if (nrow(X_MARGIN_MARKERS)) {
           as.data.frame(ot_indices(x_ot_dcpm[, s, drop = FALSE])[, -1]),
           as.data.frame(ot_flag_library(x_ot_dcpm[, s], x_ot_ref)))
   }))
-  cat(sprintf("\n=== GSE183742 per library, by the Supp. Table 6 rule (reference: this study's adult WT + transparent Sey, n = %d) ===\n",
+  cat(sprintf("\n=== GSE183742 per library, by the Supplementary Table 13 rule (reference: this study's adult WT + transparent Sey, n = %d) ===\n",
               ncol(x_ot_ref)))
   print(x_ot_duncan[, c("library_id", "group", "Kera", "Rho", "pigment",
                         "contamination_flags")], row.names = FALSE)
@@ -888,7 +888,7 @@ if (!is.null(x_dir_tab)) {
 }
 if (file.exists(file.path(X_OUT, "CrossDataset_DissectionMargin.csv"))) {
   cat("  CrossDataset_DissectionMargin.csv       off-panel margin markers, every group\n")
-  cat("  CrossDataset_GSE183742_OffTarget.csv    GSE183742 per library, Supp. Table 6 rule\n")
+  cat("  CrossDataset_GSE183742_OffTarget.csv    GSE183742 per library, Supplementary Table 13 rule\n")
 }
 cat("\nWhat this analysis CANNOT say: that a gene behaves identically in the\n")
 cat("two alleles. It says whether the same expressed/not-expressed calls are\n")

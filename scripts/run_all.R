@@ -33,7 +33,7 @@
 ##   01_load.R                   metadata, counts, pool sex composition, panels
 ##   01b_qc_library_depth.R      library complexity at matched depth
 ##   01c_contamination_indices.R off-target tissue and stromal share per
-##                               library (Supp. Table 6); also defines the
+##                               library (Supplementary Table 13); also defines the
 ##                               rule 09 applies to GSE183742
 ##   02_shared_gene_assignment.R primary panel for genes on more than one
 ##   03_expression_status.R      expressed / not expressed / indeterminate
@@ -114,7 +114,7 @@ STEPS <- data.frame(
             "concordance with a replicate-aware analysis", "figures",
             "cross-dataset replication", "trigeminal ganglion"),
   ## 07 is required: the figures read its verdicts. 01c is required: it writes
-  ## Supp. Table 6 and defines the rule 09 uses.
+  ## Supplementary Table 13 and defines the rule 09 uses.
   required = c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,
                FALSE, FALSE, TRUE),
   needs_env = c("", "", "", "", "", "", "", "", "", "", "", "",
@@ -281,7 +281,7 @@ if (all(status$ok[!is.na(status$ok)])) {
   if (exists("OUT_ROOT")) {
     message("\nOutputs and RunProvenance.txt in:\n  ", OUT_ROOT)
     message("\nManuscript numbers come from:")
-    message("  Contamination_Indices.csv    off-target tissue per library (Supp. Table 6)")
+    message("  Contamination_Indices.csv    off-target tissue per library (Supplementary Table 13)")
     message("  ExpressionCalls.csv          status, pooled counts, Poisson limits")
     message("  Assessability.csv            what statement each gene supports")
     message("  CategoricalGenes.csv         on in one group, off in the other")

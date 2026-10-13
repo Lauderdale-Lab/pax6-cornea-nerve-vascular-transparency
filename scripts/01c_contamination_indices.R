@@ -1,5 +1,5 @@
 ###############################################################################
-## 01c_contamination_indices.R -- off-target tissue in each library (Supp. Table 6)
+## 01c_contamination_indices.R -- off-target tissue in each library (Supplementary Table 13)
 ##
 ## Analysis pipeline for:
 ##   Nerve and vascular abnormalities precede loss of corneal transparency
@@ -310,7 +310,7 @@ message("Stroma-poor, superseded rule (Kera < 100 CPM, any age)              : "
         if (length(ot_old_rule)) paste(ot_old_rule, collapse = ", ") else "none")
 if (!setequal(ot_old_rule, ot_new_rule)) {
   message("  The two rules disagree. The current one is age-matched; say so if an")
-  message("  earlier Supp. Table 6 used the old one.")
+  message("  earlier Supplementary Table 13 used the old one.")
 }
 
 message("\n", strrep("=", 74))

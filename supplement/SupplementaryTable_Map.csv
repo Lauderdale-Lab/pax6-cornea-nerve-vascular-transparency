@@ -1,0 +1,62 @@
+table,table_title,sheet,root,source_file,include,note
+5,Developmental status crossings,Status_crossings,run,Developmental_StatusCrossings.csv,Y,basis of Figure 7
+6,Developmental trajectories,Trajectories,run,Developmental_Trajectories.csv,Y,
+6,Developmental trajectories,Steps_per_gene,run,Developmental_Steps.csv,Y,per-gene DE for each adjacent age step; basis of the Figure 7 supplementary heatmaps
+6,Developmental trajectories,Steps_summary,run,Developmental_Summary.csv,Y,
+7,Concordance with replicate-aware models,Age_axis_crossings,run,Concordance/Concordance_AgeAxis.csv,Y,Figure 7 crossings re-tested ungated; verdict draws open symbols
+7,Concordance with replicate-aware models,Age_axis_cannot_assess,run,Concordance/Concordance_AgeAxis_StandardSignificant.csv,Y,ungated calls not crossings; pipeline_route column says where each went
+7,Concordance with replicate-aware models,Genotype_axis_calls,run,Concordance/Concordance_GenotypeAxis.csv,Y,every gene by comparison incl. cannot-assess calls significant ungated
+7,Concordance with replicate-aware models,Genotype_axis_summary,run,Concordance/Concordance_GenotypeAxis_Summary.csv,Y,
+7,Concordance with replicate-aware models,edgeR,run,Concordance/Concordance_edgeR.csv,Y,second engine
+7,Concordance with replicate-aware models,Flagged_library_calls,run,Concordance/Concordance_FlaggedLibraryCalls.csv,Y,DECISION: not in current description; cited in Methods text of 07
+7,Concordance with replicate-aware models,Family_moves,run,Concordance/Concordance_GenotypeAxis_FamilyMoves.csv,N,DECISION: not in current description; 13 rows
+8,Genotype-by-age interaction tests,Interaction_tests,run,InteractionResults.csv,Y,564 rows = 483 distinct tests; shared-panel genes appear once per panel
+9,Threshold and stability sensitivity,Threshold_grid,run,Concordance/Concordance_ThresholdStability.csv,Y,3x3 ON/OFF by min fold
+9,Threshold and stability sensitivity,Fold_sweep,run,Categorical_FoldThresholdSensitivity.csv,Y,min bounded fold 1 to 5
+9,Threshold and stability sensitivity,Gate_cost,run,GateCost_ByCell.csv,Y,Adult:Sey and Adult:Sey_T are the same cells
+10,Expression status and assessability,Expression_calls,run,ExpressionCalls.csv,Y,
+10,Expression status and assessability,Assessability,run,Assessability.csv,Y,
+10,Expression status and assessability,Expression_summary,run,ExpressionSummary.csv,Y,
+10,Expression status and assessability,Assessability_summary,run,Assessability_Summary.csv,Y,
+11,Categorical differences in expression status,Categorical_genes,run,CategoricalGenes.csv,Y,axis column separates Figure 8B comparisons from the combined comparison
+12,Trigeminal ganglion pilot,Panel_results,run,Trigeminal/Trigeminal_PanelResults.csv,Y,
+12,Trigeminal ganglion pilot,Panel_summary,run,Trigeminal/Trigeminal_PanelSummary.csv,Y,
+12,Trigeminal ganglion pilot,Sample_table,run,Trigeminal/Trigeminal_SampleTable.csv,Y,
+12,Trigeminal ganglion pilot,Tissue_markers,run,Trigeminal/Trigeminal_TissueMarkers.csv,Y,
+12,Trigeminal ganglion pilot,Genome_wide,run,Trigeminal/Trigeminal_GenomeWide.csv,Y,DECISION: not in current description; carries positive-control result
+13,Sequencing library inventory and quality metrics,Library_metadata,handcurated,Supplementary_Table_13_Sequencing_library_inventory_and_quality_metrics.xlsx,Y,hand-curated; copied unchanged
+14,Cross-dataset replication against GSE183742,WT_status_concordance,run,CrossDataset/CrossDataset_WT_StatusConcordance.csv,Y,
+14,Cross-dataset replication against GSE183742,WT_crosstab,run,CrossDataset/CrossDataset_WT_CrossTab.csv,Y,
+14,Cross-dataset replication against GSE183742,WT_null_distribution,run,CrossDataset/CrossDataset_NullDistribution.csv,Y,abundance-matched null
+14,Cross-dataset replication against GSE183742,Direction,run,CrossDataset/CrossDataset_Direction.csv,Y,
+14,Cross-dataset replication against GSE183742,Direction_crosstab,run,CrossDataset/CrossDataset_Direction_CrossTab.csv,Y,
+14,Cross-dataset replication against GSE183742,Direction_null_distribution,run,CrossDataset/CrossDataset_Direction_NullDistribution.csv,Y,size-matched null
+14,Cross-dataset replication against GSE183742,Dissection_margin,run,CrossDataset/CrossDataset_DissectionMargin.csv,Y,
+14,Cross-dataset replication against GSE183742,GSE183742_off_target,run,CrossDataset/CrossDataset_GSE183742_OffTarget.csv,Y,DECISION: not in current description
+15,Curated gene panels and primary-panel assignment,Axon_guidance_panel,repo,Gene_Panels_and_Reference_Lists/master_lists/AxonGuidance_Master_List.csv,Y,
+15,Curated gene panels and primary-panel assignment,Myelination_panel,repo,Gene_Panels_and_Reference_Lists/master_lists/Myelination_Master_List.csv,Y,
+15,Curated gene panels and primary-panel assignment,Vascular_lymphatic_panel,repo,Gene_Panels_and_Reference_Lists/master_lists/VascularLymphatic_Master_List.csv,Y,
+15,Curated gene panels and primary-panel assignment,Primary_panel_assignment,run,SharedGenePrimaryPanel.csv,Y,
+15,Curated gene panels and primary-panel assignment,Shared_gene_assignment,run,SharedGeneAssignment.csv,Y,derivation of the primary panel for genes on more than one panel
+16,Per-gene differential expression outcomes,DE_results,run,DE_Results.csv,Y,
+16,Per-gene differential expression outcomes,DE_summary,run,DE_Summary.csv,Y,
+16,Per-gene differential expression outcomes,Adult_omnibus_LRT,run,AdultOmnibusLRT.csv,Y,
+16,Per-gene differential expression outcomes,Hinge_check,run,HingeCheck.csv,Y,transparent-Sey versus all-Sey adult comparison
+16,Per-gene differential expression outcomes,Testability_audit,run,TestabilityAudit.csv,Y,
+16,Per-gene differential expression outcomes,Cooks_filtering,run,CooksFiltering.csv,Y,
+17,Program-level tests,Program_level,run,ProgramLevel.csv,Y,
+18,Read processing and quantification,Libraries,handcurated,Supplementary_Table_18_Read_processing_and_quantification.xlsx,Y,"hand-built workbook (4 sheets: Libraries, Strandedness, Software and reference, Raw file checksums); copied with Supplemental reworded to Supplementary"
+19,Source data for Figures 7-10 and the supplementary figures,Figure7,run,Figure7_SourceData.csv,Y,NEW TABLE (provisional number).
+19,Source data for Figures 7-10 and the supplementary figures,Figure8,run,Figure8_SourceData.csv,Y,NEW TABLE (provisional number).
+19,Source data for Figures 7-10 and the supplementary figures,Figure9,run,Figure9_SourceData.csv,Y,NEW TABLE (provisional number).
+19,Source data for Figures 7-10 and the supplementary figures,Figure10,run,Figure10_SourceData.csv,Y,NEW TABLE (provisional number).
+19,Source data for Figures 7-10 and the supplementary figures,Figure8_Confounded,run,Figure8_Confounded_SourceData.csv,Y,NEW TABLE (provisional number). supplementary figure; number assigned at assembly
+19,Source data for Figures 7-10 and the supplementary figures,Figure7_DevDE_Nerve,run,Concordance/Figure7_DevelopmentalDE_Nerve_SourceData.csv,Y,NEW TABLE (provisional number). supplementary heatmap
+19,Source data for Figures 7-10 and the supplementary figures,Figure7_DevDE_Vascular,run,Concordance/Figure7_DevelopmentalDE_Vascular_SourceData.csv,Y,NEW TABLE (provisional number). supplementary heatmap
+20,Library depth and off-target tissue QC (pipeline output),Contamination_indices,run,Contamination_Indices.csv,Y,NEW TABLE (provisional number). Overlaps pigment and lymphoid indices in Table 13
+20,Library depth and off-target tissue QC (pipeline output),Depth_per_sample,run,QC_LibraryDepth_PerSample.csv,Y,
+20,Library depth and off-target tissue QC (pipeline output),Depth_pool_share,run,QC_LibraryDepth_PoolShare.csv,Y,
+20,Library depth and off-target tissue QC (pipeline output),Depth_rarefaction_series,run,QC_LibraryDepth_Series.csv,Y,
+-,(not in any table),Contamination_flags_subset,run,SuppTable6_Contamination.csv,N,duplicate subset of Table 13 columns; retire this output
+-,(not in any table),PCA_source_data,run,Concordance/QC_SamplePCA_SourceData.csv,N,left out: PCA belongs to paper 2
+-,(not in any table),PCA_variance_explained,run,Concordance/QC_SamplePCA_VarianceExplained.csv,N,left out: PCA belongs to paper 2
