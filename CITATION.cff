@@ -43,6 +43,16 @@ license: MIT
 version: 1.0.4
 doi: 10.5281/zenodo.22965379
 date-released: '2026-10-13'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23347047
+    description: This software, version 1.0.4 (Zenodo)
+  - type: doi
+    value: 10.5281/zenodo.23349739
+    description: Complete output files of the v1.0.4 run (benchmark dataset, Zenodo)
+  - type: doi
+    value: 10.5281/zenodo.23350548
+    description: RNA-seq library metadata and processing QC (Supplementary Tables 13 and 18, Zenodo)
 
 # Uncomment and complete once the manuscript is published, so that
 # "Cite this repository" offers the paper as the preferred citation.

@@ -8,6 +8,8 @@ R code for the curated-panel RNA-seq analysis reported in:
 
 Repository: <https://github.com/Lauderdale-Lab/pax6-cornea-nerve-vascular-transparency> · Archived release: [10.5281/zenodo.22965379](https://doi.org/10.5281/zenodo.22965379) · Contact: James D. Lauderdale, <jdlauder@uga.edu>
 
+Zenodo records: [software v1.0.4](https://doi.org/10.5281/zenodo.23347047) · [all versions](https://doi.org/10.5281/zenodo.22965379) · [v1.0.4 run outputs (benchmark)](https://doi.org/10.5281/zenodo.23349739) · [RNA-seq library metadata and processing QC](https://doi.org/10.5281/zenodo.23350548)
+
 Licensed under the MIT License — see [`LICENSE`](LICENSE).
 
 ---
@@ -445,3 +447,5 @@ python3 supplement/check_supplement.py --out <out> --run results/<run> --map sup
 ```
 The check script recomputes the numbers quoted in the Supplementary Tables text and
 fails if any output of the run is not named in the map. Values are never edited.
+
+Pipeline output files named in each table description are archived at Zenodo (10.5281/zenodo.23349739). Tables 13 and 18 (hand-curated library metadata and processing QC) are archived at 10.5281/zenodo.23350548.
