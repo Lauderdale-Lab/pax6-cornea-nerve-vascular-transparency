@@ -79,7 +79,7 @@ checks confirm it:
 
 - **Inputs.** `RunProvenance.txt` records the MD5 of the count matrix and
   metadata it read. Both should match
-  `docs/RunProvenance_v1.0.3_2026-09-27.txt`, the record of the run behind
+  `docs/RunProvenance_v1.0.4_2026-10-13.txt`, the record of the run behind
   the manuscript, made on the matrix as deposited at GEO. That file also lists
   the R and package versions used.
 - **Panels.** The three curated panel master lists are committed in
@@ -408,7 +408,7 @@ if it is absent; `limma` (installed with `edgeR`) for the batch-removed view of
 the sample PCA, which is likewise skipped without it. `data.table` must be
 recent enough that `fread()` accepts `comment.char` (1.14.10 does not; the
 published run used 1.18.6.1). Exact versions used for the published results
-are recorded in `docs/RunProvenance_v1.0.3_2026-09-27.txt`.
+are recorded in `docs/RunProvenance_v1.0.4_2026-10-13.txt`.
 
 The study's count matrix is not included in this repository; sequencing data
 and the count matrix are deposited at GEO [GSE348661](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE348661). The count matrices
