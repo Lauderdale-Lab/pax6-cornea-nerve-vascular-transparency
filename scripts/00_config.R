@@ -37,7 +37,7 @@
 ## Paths
 ## --------------------------------------------------------------------------
 
-PROJECT_NAME <- Sys.getenv("PAX6_PROJECT_NAME", unset = "Combined_2025_2026")
+PROJECT_NAME <- Sys.getenv("PAX6_PROJECT_NAME", unset = "GEO_GSE348661")
 
 ## Where the analysis scripts live. Used to locate PanelPrimaryAssignment.R.
 ## Resolution order: PAX6_SCRIPT_DIR if set; otherwise scripts/ under the

@@ -51,7 +51,7 @@ flagged library.
 1. Clone the repository.
 2. Download the study's count matrix from GEO GSE348661, decompress it and
    save it as
-   `RNAseq_Quantification_Matrices/Combined_2025_2026/gene_counts_featureCounts_all48.txt`
+   `RNAseq_Quantification_Matrices/GEO_GSE348661/gene_counts_featureCounts_all48.txt`
    (the README in that folder gives the file name, the one-line command and
    the MD5 checksums).
 3. In R, from the root of the clone:
@@ -297,6 +297,18 @@ and every script header, and the GEO accession of the study's data
 plain `.bam` column names, as written by the current upstream pipeline, as
 well as the earlier `_hisat2.sorted.bam` form. No statistical change.
 
+**Version 1.0.4 (2026-10-13).** No statistical change; every number is as in
+1.0.3. References to the contamination table now read Supplementary Table 13
+(they said "Supp. Table 6", its number in an earlier draft), so the run's text
+files change by those words only. `supplement/` records which pipeline output
+forms each sheet of each Supplementary Table and rebuilds the tables from a run
+folder (`SupplementaryTable_Map.csv`, `assemble_supplement.py`,
+`check_supplement.py`). The study's metadata and matrix folders are renamed
+`GEO_GSE348661` (were `Combined_2025_2026`), the name the published run already
+used; the file contents and MD5 checksums are unchanged, and
+`PAX6_PROJECT_NAME` still overrides the default. Provenance records of the
+superseded v1.0.0 and v1.0.2 runs are in `docs/provenance_history/`.
+
 **Version 1.0.3 (2026-09-27).** The count matrix is now the one produced from
 the raw reads by run `reprocess_2026-09` of the upstream pipeline (commit
 9182fd5) and deposited at GEO GSE348661. It differs from the earlier matrix by
@@ -305,8 +317,8 @@ number is unchanged; P values and fold changes differ at the third significant
 figure or beyond. The one flag that moves is library QC for trigeminal library
 B_TU2 (detection z-score −2.96, against −3.17 before; not excluded either way). `00b` and `01_load.R` now read the tidy GEO layout (`gene_id`
 then one column per sample) as well as raw featureCounts output. The README in
-`RNAseq_Quantification_Matrices/Combined_2025_2026/` gives the GEO file and
-its checksums. `docs/` holds the provenance records of the runs on the
+`RNAseq_Quantification_Matrices/GEO_GSE348661/` gives the GEO file and
+its checksums. `docs/` (earlier records in `docs/provenance_history/`) holds the provenance records of the runs on the
 reprocessed matrix: `RunProvenance_v1.0.2_2026-09-27.txt` (raw featureCounts
 layout) and `RunProvenance_v1.0.3_2026-09-27.txt` (the GEO file, with this
 release).
