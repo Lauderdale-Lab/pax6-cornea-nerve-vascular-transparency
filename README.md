@@ -8,7 +8,7 @@ R code for the curated-panel RNA-seq analysis reported in:
 
 Repository: <https://github.com/Lauderdale-Lab/pax6-cornea-nerve-vascular-transparency> · Archived release: [10.5281/zenodo.22965379](https://doi.org/10.5281/zenodo.22965379) · Contact: James D. Lauderdale, <jdlauder@uga.edu>
 
-Zenodo records: [software v1.0.4](https://doi.org/10.5281/zenodo.23347047) · [all versions](https://doi.org/10.5281/zenodo.22965379) · [v1.0.4 run outputs (benchmark)](https://doi.org/10.5281/zenodo.23349739) · [RNA-seq library metadata and processing QC](https://doi.org/10.5281/zenodo.23350548)
+Zenodo records: [software v1.0.5](https://doi.org/10.5281/zenodo.24369261) · [v1.0.4, which produced the reported run](https://doi.org/10.5281/zenodo.23347047) · [all versions](https://doi.org/10.5281/zenodo.22965379) · [v1.0.4 run outputs (benchmark)](https://doi.org/10.5281/zenodo.23349739) · [RNA-seq library metadata and processing QC](https://doi.org/10.5281/zenodo.23350548)
 
 Licensed under the MIT License — see [`LICENSE`](LICENSE).
 
