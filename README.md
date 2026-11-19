@@ -299,6 +299,11 @@ and every script header, and the GEO accession of the study's data
 plain `.bam` column names, as written by the current upstream pipeline, as
 well as the earlier `_hisat2.sorted.bam` form. No statistical change.
 
+**Version 1.0.5 (2026-11-19).** No statistical change. Adds
+`scripts/Pax6_levels_JCI_models.R`, which reports the Pax6 log₂ fold change,
+standard error and P value from the pipeline's own DESeq2 fits (Supplementary
+Table 21).
+
 **Version 1.0.4 (2026-10-13).** No statistical change; every number is as in
 1.0.3. References to the contamination table now read Supplementary Table 13
 (they said "Supp. Table 6", its number in an earlier draft), so the run's text
