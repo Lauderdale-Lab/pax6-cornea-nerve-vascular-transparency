@@ -44,6 +44,9 @@ version: 1.0.5
 doi: 10.5281/zenodo.22965379
 date-released: '2026-11-19'
 identifiers:
+- type: doi
+    value: 10.5281/zenodo.24369261
+    description: This software, version 1.0.5 (Zenodo)
   - type: doi
     value: 10.5281/zenodo.23347047
     description: This software, version 1.0.4 (Zenodo)
